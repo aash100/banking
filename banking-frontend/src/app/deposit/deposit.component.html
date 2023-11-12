@@ -1,0 +1,28 @@
+<div class="main-div">
+    <mat-card class="mat-elevation-z0 outline">
+            <mat-card-header>
+                <p>Deposit Money</p>
+            </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="depositForm" (ngSubmit)="depositFormSubmit()" autocomplete="off">
+                  <p>
+                      <mat-form-field>
+                        <label >Amount </label>
+                        <input matInput class="form-control" type="email" id="email" placeholder="Amount to Deposit" formControlName="amount" name="amount">
+                    </mat-form-field>
+                  </p>
+                  <p>
+                    <mat-form-field>
+                        <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin"
+                                               name="pin" formControlName="pin">
+                    </mat-form-field>
+                  </p>
+                  <button class="btn btn-round btn-danger btn-block" type="submit" [disabled]="!depositForm.valid">Deposit</button>
+
+            </form>
+        </mat-card-content>
+        
+    </mat-card>
+</div>
+
+

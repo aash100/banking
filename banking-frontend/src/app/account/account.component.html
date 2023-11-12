@@ -1,0 +1,35 @@
+
+
+
+<div style="padding: 32px">
+
+    <!-- <div class="example-container mat-elevation-z8"> -->
+      <table>
+        <thead>
+          <tr>
+            <th style="padding-right: 5px;">Account Number</th>
+            <!-- <th>Name</th> -->
+            <th>Available Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of accounts">
+            <td>{{ account.accountNumber }}</td>
+            <!-- <td>{{ account.name }}</td> -->
+            <td>{{ account.balance }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <mat-table #table [dataSource]="dataSource">
+  
+        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+          <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row[column.columnDef] }}</mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  
+      </mat-table> -->
+    </div>
+

@@ -1,0 +1,39 @@
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { BankingService } from '../services/banking.service';
+import { MatTableDataSource } from '@angular/material/table';
+
+@Component({
+    selector: 'app-account',
+    templateUrl: './account.component.html',
+    styleUrls: ['./account.component.css']
+})
+export class AccountComponent implements OnInit {
+
+    columns = [
+        { columnDef: 'accountNumber', header: 'Account Number' },
+        { columnDef: 'name',     header: 'Name' },
+        { columnDef: 'balance',   header: 'Available Balance'},
+      ];
+    
+    displayedColumns = this.columns.map(c => c.columnDef);
+    public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+
+    accounts:any =[];
+    constructor( private service: BankingService) {
+        this.service.refresh.subscribe(()=>{this.fetchAccountDetails();});
+    }
+
+    ngOnInit(): void {
+        this.fetchAccountDetails();
+    }
+
+  private fetchAccountDetails() {
+    this.accounts=[];
+      this.service.onGetAccount().subscribe(
+          (response: any) => {
+            this.service.accountNumber.next(response['accountNumber']);
+            this.accounts.push(response);
+          }
+      );
+  }
+}
