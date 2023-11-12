@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class UserProfileComponent implements OnInit {
 
     constructor(
         private service: BankingService,
-        private toastr: ToastrService,
     ) {
         this.initialized = false;
     }
@@ -35,7 +33,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     fetchProfile() {
-        this.service.onFetchProfile().subscribe(
+        this.service.fetchUserDetails().subscribe(
             (response: any) => {
                 this.email = response['email'];
                 this.name = response['name'];
@@ -57,10 +55,10 @@ export class UserProfileComponent implements OnInit {
             contactNo: this.contactNo
         };
         console.log(userDetails);
-        this.service.onUpdateProfile(userDetails).subscribe(
-          (response: any) => {
-                this.toastr.success(response['message']);
-            }
-        );
+        // this.service.onUpdateProfile(userDetails).subscribe(
+        //   (response: any) => {
+        //         this.toastr.success(response['message']);
+        //     }
+        // );
     }
 }

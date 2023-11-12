@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute,Router, RouterLinkActive, Routes } from '@angular/router';
 import { BankingService } from '../services/banking.service';
-import { Subscription, map, share, timer } from 'rxjs';
+import { AuthGuardService } from '../guard/auth-guard.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +26,13 @@ export class HomeComponent implements OnInit{
     activeLink = this.navLinks[0];
     
 
-    constructor(private router: Router, private service: BankingService){
+    constructor(private router: Router, private service: BankingService, private auth: AuthGuardService, private snackBar: MatSnackBar){
 
     }
   
 
     ngOnInit(): void {
-      this.service.onFetchProfile().subscribe((response:any)=>{
+      this.service.fetchUserDetails().subscribe((response:any)=>{
         console.log(response);
         this.service.name.next(response['name']);
       });
@@ -56,8 +57,18 @@ export class HomeComponent implements OnInit{
       return this.router.isActive(routerLink, false);
     }
 
-      onTabChanged($event: Event) {
-        console.log('$event', $event);
-        this.service.refresh.emit('refresh');
-      }
+    selectedTabValue($event: any) {
+        if(this.auth.getAuthorizationToken()){
+          this.service.refresh.emit('refresh');
+        }else{
+          this.router.navigate(['/login']);
+          this.snackBar.open('Session Expired: Logged out successfully','', {
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+              panelClass: 'error-snackbar',
+              duration:3000
+          });
+        }
+
+    }
 }

@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit {
 
   private fetchAccountDetails() {
     this.accounts=[];
-      this.service.onGetAccount().subscribe(
+      this.service.getAccountDetails().subscribe(
           (response: any) => {
             this.service.accountNumber.next(response['accountNumber']);
             this.accounts.push(response);

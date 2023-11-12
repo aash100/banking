@@ -13,30 +13,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class BankingService {
 
-  LoginUrl = environment.apiUrl + '/users/login';
-    UserUrl = environment.apiUrl + '/users/register';
-    userDetails = environment.apiUrl + 'dashboard/user';
-
     private _refreshNeeded$ = new Subject<void>();
     public name = new Subject<string>();
     public accountNumber = new Subject<string>();
     
-    refresh = new EventEmitter();
+    public refresh = new EventEmitter();
     
         
     constructor(
         private http: HttpClient,
-        private toastr: ToastrService,
         private snackBar: MatSnackBar
     ) {
-    }
-
-    get refreshNeeded$() {
-        return this._refreshNeeded$;
-    }
-
-    loginCall(loginDetails: any) {
-        return this.http.post(this.LoginUrl, loginDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     private handleError(error: HttpErrorResponse) {
@@ -65,37 +52,47 @@ export class BankingService {
 
     }
 
-    onFetchProfile() {
+    get refreshNeeded$() {
+        return this._refreshNeeded$;
+    }
+
+    login(loginDetails: any) {
+        return this.http.post(Constant.login, loginDetails).pipe(catchError(error => this.handleError(error)));
+    }
+
+    
+
+    fetchUserDetails() {
         return this.http.get(Constant.userDetails).pipe(catchError(error => this.handleError(error)));
     }
 
-    onUpdateProfile(userDetails: { dob: string; name: string; email: string }) {
-        return this.http.put(this.UserUrl, userDetails).pipe(tap(() => {
-            this.refreshNeeded$.next();
-        }), catchError(error => this.handleError(error)));
+    // onUpdateProfile(userDetails: { dob: string; name: string; email: string }) {
+    //     return this.http.put(Constant.registerUser, userDetails).pipe(tap(() => {
+    //         this.refreshNeeded$.next();
+    //     }), catchError(error => this.handleError(error)));
+    // }
+
+    registerUser(userDetails: any) {
+        return this.http.post(Constant.registerUser, userDetails).pipe(catchError(error => this.handleError(error)));
     }
 
-    onRegister(userDetails: any) {
-        return this.http.post(this.UserUrl, userDetails).pipe(catchError(error => this.handleError(error)));
-    }
-
-    onGetAccount() {
-        return this.http.get(Constant.accountUrl).pipe(catchError(error => this.handleError(error)));
+    getAccountDetails() {
+        return this.http.get(Constant.account).pipe(catchError(error => this.handleError(error)));
     }
 
     transferMoney(transferDetails: any) {
-        return this.http.post(Constant.transferUrl, transferDetails).pipe(catchError(error => this.handleError(error)));
+        return this.http.post(Constant.transfer, transferDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     withdrawMoney(transferDetails: any) {
-        return this.http.post(Constant.withdrawUrl, transferDetails).pipe(catchError(error => this.handleError(error)));
+        return this.http.post(Constant.withdraw, transferDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     depositMoney(transferDetails: any) {
-        return this.http.post(Constant.depositUrl, transferDetails).pipe(catchError(error => this.handleError(error)));
+        return this.http.post(Constant.deposit, transferDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     getTransactions() {
-        return this.http.get(Constant.trasactionUrl).pipe(catchError(error => this.handleError(error)));
+        return this.http.get(Constant.transactions).pipe(catchError(error => this.handleError(error)));
     }
 }

@@ -28,7 +28,7 @@ export class LoginComponent {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     };
-    this.service.loginCall(loginDetails).subscribe(
+    this.service.login(loginDetails).subscribe(
       (response:any) => {
         if(response.successMsg){
           this.loginForm.reset();

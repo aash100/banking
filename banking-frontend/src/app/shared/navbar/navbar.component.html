@@ -1,7 +1,7 @@
 <header>
     <div class="left-content">
       <!-- Left-aligned content goes here -->
-      <h1>{{welcomeTitle.toUpperCase()}} </h1>
+      <h2>{{welcomeTitle.toUpperCase()}} </h2>
       <div *ngIf="name"> Last Log in {{ time | date: 'dd-MMM-YYYY hh:mm:ss a' }}</div>
 
     </div>
@@ -22,7 +22,7 @@
     
        </div>
       </nav>
-      <button *ngIf="name" mat-icon-button (click)="onLogout()" style="background-color: #004a8f; color: white; margin-top: 15px;">
+      <button *ngIf="name && !(isLogin() || isRegister())" mat-icon-button (click)="onLogout()" style="background-color: #004a8f; color: white; margin-top: 15px;">
         <mat-icon>exit_to_app</mat-icon>
         <span>Logout</span>
       </button>

@@ -53,7 +53,7 @@ export class RegisterComponent {
 
         };
         const obj ={userDetails:userDetails, pin: this.registerForm.value.pin}
-        this.service.onRegister(obj).subscribe(
+        this.service.registerUser(obj).subscribe(
             (response : any) => {
                 if(response.successMsg){
                     this.snackBar.open(response.successMsg,'', {

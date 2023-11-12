@@ -9,7 +9,8 @@
                     <mat-form-field>
                         <label >Account No. </label>
                         <input matInput type="text" id="transferTo" placeholder="Receiver's account no." formControlName="transferTo" name="transferTo">
-                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].invalid">Enter a valid Account no.</mat-error>
+                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].invalid && transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Source & Target Account no. are same</mat-error>
+                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].invalid && !transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Enter a valid Account no.</mat-error>
 
                     </mat-form-field>
                   </p>

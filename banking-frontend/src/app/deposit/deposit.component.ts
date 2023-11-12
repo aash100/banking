@@ -21,6 +21,7 @@ export class DepositComponent implements OnInit, OnDestroy{
     subscription: Subscription;
     private depositMoneySubscription: Subscription = new Subscription;
     constructor(private service: BankingService, private snackBar: MatSnackBar, private router: Router) {
+      this.service.refresh.subscribe(()=>{this.depositForm.reset()});
       this.subscription = router.events.subscribe((event) => {
         if (event instanceof NavigationStart) {
            this.browserRefresh = !router.navigated;

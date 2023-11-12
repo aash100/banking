@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { BankingService } from '../services/banking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,17 +9,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     styleUrls: ['./transfer-money.component.css']
 })
 export class TransferMoneyComponent implements OnInit{
-  transferMoneyForm = new FormGroup(
-    {
-        transferTo: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-        amount: new FormControl(null, [Validators.required, Validators.max(100000), Validators.min(1)]),
-        pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
-    });
+
+    sourceAccountNumber: string ='';
+    error={isSourceAndTargetSame : false};
+
+    transferMoneyForm = new FormGroup(
+        {
+            transferTo: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+            amount: new FormControl(null, [Validators.required, Validators.max(100000), Validators.min(1)]),
+            pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
+        }
+    );
 
     constructor(
         private service: BankingService,
         private snackBar: MatSnackBar,
     ) {
+        this.service.accountNumber.subscribe((value)=>{
+            this.sourceAccountNumber = value;
+        });
+        this.service.refresh.subscribe(()=>{this.transferMoneyForm.reset()});
+
     }
 
     ngOnInit(): void {
@@ -28,7 +38,13 @@ export class TransferMoneyComponent implements OnInit{
                 transferTo: new FormControl(null, [Validators.required, Validators.minLength(8)]),
                 amount: new FormControl(null, [Validators.required, Validators.max(100000), Validators.min(1)]),
                 pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
-            });
+            }
+        );
+        this.transferMoneyForm.controls.transferTo.valueChanges.subscribe(value => {
+            if(value===this.sourceAccountNumber){
+                this.transferMoneyForm.controls.transferTo.setErrors({'isSourceAndTargetSame': true});
+            }
+        });
     }
     transferMoneyFormSubmit() {
         const transferDetails = {
@@ -52,3 +68,6 @@ export class TransferMoneyComponent implements OnInit{
         )
     }
 }
+
+
+

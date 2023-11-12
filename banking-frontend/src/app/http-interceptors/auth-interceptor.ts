@@ -18,10 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
     let headers = req.headers;
     if(!req.url.includes('/api/users')){
       if(!authToken){
-        this.snackBar.open('You are logged out of the current session!!','', {
+        this.snackBar.open('Session Expired: Logged out successfully','', {
           verticalPosition: 'top',
           horizontalPosition: 'center',
-          panelClass: 'success-snackbar',
+          panelClass: 'error-snackbar',
           duration:3000
         });
         this.router.navigate(['/login']);

@@ -16,7 +16,11 @@ export class WithdrawalComponent implements OnInit {
         pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
     });
 
-    constructor(private service: BankingService, private snackBar: MatSnackBar) {}
+    constructor(private service: BankingService, private snackBar: MatSnackBar) {
+      this.service.refresh.subscribe(()=>{
+        this.withdrawalForm.reset();
+    });
+    }
     ngOnInit(): void {
         this.withdrawalForm = new FormGroup(
             {

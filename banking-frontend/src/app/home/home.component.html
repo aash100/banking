@@ -1,4 +1,4 @@
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="selectedTabValue($event)">
     <mat-tab label="Account Summary"> 
       <app-account></app-account>
       <label style="margin-left: 37px; font-weight: bold;">Transaction History</label>
