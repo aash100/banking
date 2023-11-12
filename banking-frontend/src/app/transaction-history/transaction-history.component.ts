@@ -37,6 +37,7 @@ export class TransactionHistoryComponent implements OnInit {
       this.service.getTransactions().subscribe(
       (response: any) => {
             if(response.data && response.data.length>0){
+              this.noRecordFound = false;
               this.dataSource = new MatTableDataSource(response.data);
             }else{
               this.noRecordFound = true;

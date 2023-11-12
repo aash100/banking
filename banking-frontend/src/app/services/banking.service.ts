@@ -50,17 +50,17 @@ export class BankingService {
             }
             this.snackBar.open(errorMsg,'', {
                 verticalPosition: 'top',
-                horizontalPosition: 'right',
+                horizontalPosition: 'center',
                 panelClass: 'error-snackbar',
-                duration:5000
+                duration:3000
             });
             return throwError(error);
         }
         return throwError(this.snackBar.open('Failed Operations','', {
             verticalPosition: 'top',
-            horizontalPosition: 'right',
+            horizontalPosition: 'center',
             panelClass: 'error-snackbar',
-            duration:5000
+            duration:3000
         }));
 
     }

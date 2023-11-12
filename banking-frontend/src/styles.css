@@ -27,7 +27,7 @@ mat-form-field{
 }
 
 .success-snackbar {
-  --mdc-snackbar-container-color: #2196F3;
+  --mdc-snackbar-container-color: #004a8f;
   --mat-mdc-snack-bar-button-color: yellow;
   --mdc-snackbar-supporting-text-color: white;
 }
@@ -36,4 +36,8 @@ mat-form-field{
   --mdc-snackbar-container-color: rgb(247, 113, 113);
   --mat-mdc-snack-bar-button-color: yellow;
   --mdc-snackbar-supporting-text-color: white;
+}
+
+.outlined-card {
+  border: 1px solid #ccc; /* Change the color and thickness as needed */
 }

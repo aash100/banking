@@ -1,5 +1,5 @@
-<div class="main-div" style="margin-top: 70px;">
-    <mat-card class="mat-elevation-z0 outline">
+<div class="main-div" style="margin-top: 85px;">
+    <mat-card style="border: 1px solid #ccc;">
             <mat-card-header>
                 <p>Enter Credentials</p>
             </mat-card-header>
@@ -21,7 +21,7 @@
                       <input type="password" matInput placeholder="Password" formControlName="password" autocomplete="off">
                     </mat-form-field>
                   </p>
-                    <button class="btn btn-danger btn-block btn-round" type="submit" [disabled]="!loginForm.valid">Login</button>
+                    <button [ngStyle]="{'background-color': loginForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!loginForm.valid">Login</button>
             </form>
         </mat-card-content>
         

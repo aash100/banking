@@ -2,6 +2,22 @@
     padding: 0 10px;
   } */
 
-  .logout-button {
-    margin-left: 8px;
+  
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #9cc5ec;
+    /* color: rgb(12, 12, 170); */
+    color: #004a8f;
+  }
+  
+  .left-content {
+    text-align: left;
+  }
+  
+  .right-content {
+    text-align: right;
+    color: #004a8f
   }

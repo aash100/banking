@@ -11,18 +11,20 @@
                     <mat-form-field>
                         <input type="text" matInput placeholder="Name"
                                                formControlName="name">
+                        <mat-error *ngIf="registerForm.controls['name'].invalid">Enter a valid Name</mat-error>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
-                        <input type="text" matInput placeholder="Email" id="email"
-                                               name="email" formControlName="email">
+                        <input type="text" matInput placeholder="Email" id="email" name="email" formControlName="email">
+                        <mat-error *ngIf="registerForm.controls['email'].invalid">Enter a valid Email</mat-error>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
-                        <input type="text" matInput placeholder="Contact No."
-                                               id="contactNo" name="contactNo" formControlName="contactNo">
+                        <input type="text" matInput placeholder="Contact No." id="contactNo" name="contactNo" formControlName="contactNo">
+                        <mat-error *ngIf="registerForm.controls['contactNo'].invalid">Enter a valid Contact</mat-error>
+
                     </mat-form-field>
                   </p>
                   <p>
@@ -32,27 +34,31 @@
                       <mat-hint>MM/DD/YYYY</mat-hint>
                       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="registerForm.controls['dob'].invalid">Enter a valid Date of Birth</mat-error>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
-                        <input type="password" matInput placeholder="Password" id="password"
-                                               name="password" formControlName="password">
+                        <input type="password" matInput placeholder="Password" id="password" name="password" formControlName="password">
+                        <mat-error *ngIf="registerForm.controls['password'].invalid">Enter a valid Password</mat-error>
+                    
+                      </mat-form-field>
+                  </p>
+                  <p>
+                    <mat-form-field>
+                        <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin" name="pin" formControlName="pin">
+                        <mat-error *ngIf="registerForm.controls['pin'].invalid">Enter a valid PIN</mat-error>
+
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
-                        <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin"
-                                               name="pin" formControlName="pin">
+                        <input type="text-area" matInput placeholder="Address" formControlName="address">
+                        <mat-error *ngIf="registerForm.controls['address'].invalid">Enter a valid Address</mat-error>
+
                     </mat-form-field>
                   </p>
-                  <p>
-                    <mat-form-field>
-                        <input type="text-area" matInput placeholder="Address"
-                                               formControlName="address">
-                    </mat-form-field>
-                  </p>
-                    <button class="btn btn-round btn-danger btn-block" type="submit" [disabled]="!registerForm.valid">Register</button>
+                    <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!registerForm.valid">Register</button>
 
             </form>
         </mat-card-content>

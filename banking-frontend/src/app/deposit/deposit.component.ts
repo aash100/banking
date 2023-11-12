@@ -36,7 +36,7 @@ export class DepositComponent implements OnInit, OnDestroy{
 
       this.depositForm = new FormGroup(
         {
-          amount: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+          amount: new FormControl(null, [Validators.required, Validators.max(100000), Validators.min(1)]),
           pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
         }
       );
@@ -56,9 +56,9 @@ export class DepositComponent implements OnInit, OnDestroy{
                 this.service.refresh.emit('transfer');
                   this.snackBar.open(response.successMsg,'', {
                       verticalPosition: 'top',
-                      horizontalPosition: 'right',
+                      horizontalPosition: 'center',
                       panelClass: 'success-snackbar',
-                      duration:5000
+                      duration:3000
                   });
               }
             }

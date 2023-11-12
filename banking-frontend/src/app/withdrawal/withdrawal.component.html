@@ -1,5 +1,5 @@
 <div class="main-div">
-    <mat-card class="mat-elevation-z0 outline">
+    <mat-card style="border: 1px solid #ccc;">
             <mat-card-header>
                 <p>Withdraw Money</p>
             </mat-card-header>
@@ -15,15 +15,18 @@
                       <mat-form-field>
                         <label >Amount </label>
                         <input matInput class="form-control" type="email" id="email" placeholder="Amount to Withdraw" formControlName="amount" name="amount">
+                        <mat-error *ngIf="withdrawalForm.controls['amount'].invalid">Enter a valid amount</mat-error>
+                        <mat-hint>Max limit 100000</mat-hint>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
                         <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin"
                                                name="pin" formControlName="pin">
+                        <mat-error *ngIf="withdrawalForm.controls['pin'].invalid">Enter a valid PIN</mat-error>
                     </mat-form-field>
                   </p>
-                  <button class="btn btn-round btn-danger btn-block" type="submit" [disabled]="!withdrawalForm.valid">Withdraw</button>
+                  <button [ngStyle]="{'background-color': withdrawalForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!withdrawalForm.valid">Withdraw</button>
 
             </form>
         </mat-card-content>

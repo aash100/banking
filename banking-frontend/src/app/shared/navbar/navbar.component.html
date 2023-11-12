@@ -1,22 +1,36 @@
+<header>
+    <div class="left-content">
+      <!-- Left-aligned content goes here -->
+      <h1>{{welcomeTitle.toUpperCase()}} </h1>
+      <div *ngIf="name"> Last Log in {{ time | date: 'dd-MMM-YYYY hh:mm:ss a' }}</div>
 
+    </div>
+    <div class="right-content">
+      <!-- Right-aligned content goes here -->
+      <nav *ngIf="isLogin() || isRegister()" class="navbar navbar-expand-lg fixed-top navbar-transparent"
+        color-on-scroll="500">
+       <div class="container">
+           <div class="navbar-collapse" id="navbarToggler">
+                   <span class="nav-item" *ngIf="isLogin()">
+                    <span style="margin-left: 8px; color: black;">New User ? </span>
+                       <a routerLink="register" class="nav-link" style="color: #004a8f;">Register here </a>
+                   </span>
+                   <span class="nav-item" *ngIf="isRegister()">
+                       <a routerLink="login" class="nav-link" style="color: #004a8f;">Login</a>
+                   </span>
+           </div>
+    
+       </div>
+      </nav>
+        <button *ngIf="name" (click)="onLogout()" style="background-color: #004a8f; color: white;"><mat-icon>power_settings_new</mat-icon>
+        <span>Logout</span></button>
+    </div>
+  </header>
 
-    <mat-card style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <!-- <div style="float: left;">
-            <label *ngIf="name"> Welcome {{name}}</label>
-
-        </div> -->
-        <div style="float: right;">
-            <!-- <i class="fas fa-power-off" title="Log out" (click)="onLogout()"></i> -->
-           
-            <!-- <button mat-button class="logout-button" (click)="onLogout()">Logout</button> -->
-        </div>
-       
+    <!-- <mat-card style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        
         <mat-card-header>
             <mat-card-title> {{welcomeTitle}} 
-                <!-- <div style="margin-left: 100px; width: 500px;"> -->
-                    
-                    
-                <!-- </div> -->
                 </mat-card-title>
                 <mat-card-title>
                     <span *ngIf="name">
@@ -36,7 +50,6 @@
         color-on-scroll="500">
        <div class="container">
            <div class="navbar-collapse" id="navbarToggler">
-               <!-- <ul class="navbar-nav ml-auto"> -->
                    <span class="nav-item" *ngIf="isLogin()">
                     <span style="margin-left: 8px;">New User ? </span>
                        <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Register here </a>
@@ -44,17 +57,12 @@
                    <span class="nav-item" *ngIf="isRegister()">
                        <a routerLink="login" class="nav-link"><i class="nc-icon nc-touch-id nav-icon"></i>Login</a>
                    </span>
-               <!-- </ul> -->
            </div>
     
        </div>
     </nav>
-    <!-- <button mat-menu-item> -->
-        
-        <!-- <span>Logout</span> -->
-      <!-- </button> -->
     </mat-card-content>
-    </mat-card>
+    </mat-card> -->
 
 
 

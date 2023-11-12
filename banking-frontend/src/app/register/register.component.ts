@@ -58,9 +58,9 @@ export class RegisterComponent {
                 if(response.successMsg){
                     this.snackBar.open(response.successMsg,'', {
                         verticalPosition: 'top',
-                        horizontalPosition: 'right',
+                        horizontalPosition: 'center',
                         panelClass: 'success-snackbar',
-                        duration:5000
+                        duration:3000
                     });
                     this.router.navigate(['/login']);
                 }

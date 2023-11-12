@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { BankingService } from 'src/app/services/banking.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription, map, share, timer } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-navbar',
@@ -20,67 +21,35 @@ export class NavbarComponent implements OnInit {
     time = new Date();
     intervalId: any;
 
-    constructor(public location: Location, private element: ElementRef, private router: Router, private service: BankingService, public cookie: CookieService) {
+    constructor(public location: Location, private element: ElementRef, private router: Router, private service: BankingService, public cookie: CookieService, private snackBar: MatSnackBar) {
         this.sidebarVisible = false;
         this.service.name.subscribe((val:string)=>{
             this.name= val;
-            this.welcomeTitle = "Welcome "+ this.name + " to Banking";
+            this.welcomeTitle = "Welcome, "+ this.name;
         });
 
-        this.intervalId = setInterval(() => {
-            this.time = new Date();
-          }, 1000);
+        // this.intervalId = setInterval(() => {
+        //     this.time = new Date();
+        //   }, 1000);
       
     }
 
     ngOnInit() {
-        this.welcomeTitle = "Welcome "+ this.name + " to Banking";
-        const navbar: HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+        // this.welcomeTitle = "Welcome "+ this.name;
+        
     }
 
     ngOnDestroy(): void {
         clearInterval(this.intervalId);
     }
 
-    sidebarOpen() {
-        const toggleButton = this.toggleButton;
-        const html = document.getElementsByTagName('html')[0];
-        // console.log(html);
-        // console.log(toggleButton, 'toggle');
-
-        setTimeout(function () {
-            toggleButton.classList.add('toggled');
-        }, 500);
-        html.classList.add('nav-open');
-
-        this.sidebarVisible = true;
-    };
-
-    sidebarClose() {
-        const html = document.getElementsByTagName('html')[0];
-        // console.log(html);
-        this.toggleButton.classList.remove('toggled');
-        this.sidebarVisible = false;
-        html.classList.remove('nav-open');
-    };
-
-    sidebarToggle() {
-        // const toggleButton = this.toggleButton;
-        // const body = document.getElementsByTagName('body')[0];
-        if (this.sidebarVisible === false) {
-            this.sidebarOpen();
-        } else {
-            this.sidebarClose();
-        }
-    };
 
     isLogin() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if (titlee.charAt(0) === '#') {
-            titlee = titlee.slice(1);
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if (title.charAt(0) === '#') {
+            title = title.slice(1);
         }
-        if (titlee === '/login') {
+        if (title === '/login') {
             return true;
         } else {
             return false;
@@ -88,11 +57,11 @@ export class NavbarComponent implements OnInit {
     }
 
     isRegister() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if (titlee.charAt(0) === '#') {
-            titlee = titlee.slice(1);
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if (title.charAt(0) === '#') {
+            title = title.slice(1);
         }
-        if (titlee === '/register') {
+        if (title === '/register') {
             return true;
         } else {
             return false;
@@ -105,6 +74,11 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/login']);
         this.name = '';
         this.welcomeTitle='Welcome to Banking';
-
+        this.snackBar.open('Logged out successfully','', {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            panelClass: 'success-snackbar',
+            duration:3000
+        });
     }
 }

@@ -1,5 +1,5 @@
 <div class="main-div">
-    <mat-card class="mat-elevation-z0 outline">
+    <mat-card style="border: 1px solid #ccc;">
             <mat-card-header>
                 <p>Deposit Money</p>
             </mat-card-header>
@@ -8,17 +8,19 @@
                   <p>
                       <mat-form-field>
                         <label >Amount </label>
-                        <input matInput class="form-control" type="email" id="email" placeholder="Amount to Deposit" formControlName="amount" name="amount">
+                        <input matInput class="form-control" type="number" id="email" placeholder="Amount to Deposit" formControlName="amount" name="amount">
+                        <mat-error *ngIf="depositForm.controls['amount'].invalid">Enter a valid amount</mat-error>
+                        <mat-hint>Max limit 100000</mat-hint>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
                         <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin"
                                                name="pin" formControlName="pin">
+                        <mat-error *ngIf="depositForm.controls['pin'].invalid">Enter a valid PIN </mat-error>
                     </mat-form-field>
                   </p>
-                  <button class="btn btn-round btn-danger btn-block" type="submit" [disabled]="!depositForm.valid">Deposit</button>
-
+                  <button class="btn btn-round btn-danger btn-block" [ngStyle]="{'background-color': depositForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!depositForm.valid">Deposit</button>
             </form>
         </mat-card-content>
         
