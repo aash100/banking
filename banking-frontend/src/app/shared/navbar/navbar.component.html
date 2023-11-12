@@ -22,8 +22,12 @@
     
        </div>
       </nav>
-        <button *ngIf="name" (click)="onLogout()" style="background-color: #004a8f; color: white;"><mat-icon>power_settings_new</mat-icon>
-        <span>Logout</span></button>
+      <button *ngIf="name" mat-icon-button (click)="onLogout()" style="background-color: #004a8f; color: white; margin-top: 15px;">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+        <!-- <button *ngIf="name" (click)="onLogout()" style="background-color: #004a8f; color: white;"><mat-icon>power_settings_new</mat-icon>
+        <span>Logout</span></button> -->
     </div>
   </header>
 

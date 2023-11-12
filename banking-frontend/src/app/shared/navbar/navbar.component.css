@@ -15,9 +15,12 @@
   
   .left-content {
     text-align: left;
+    margin-left: 5px;
   }
   
   .right-content {
     text-align: right;
-    color: #004a8f
+    color: #004a8f;
+    margin-right: 5px;
+
   }
