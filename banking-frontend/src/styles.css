@@ -17,3 +17,23 @@ mat-form-field{
   border-style: solid;
   border-width: medium;
 }
+
+.snackbar {
+  background-color: blue;
+}
+
+.blue-snackbar {
+  background: #2196F3;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #2196F3;
+  --mat-mdc-snack-bar-button-color: yellow;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: rgb(247, 113, 113);
+  --mat-mdc-snack-bar-button-color: yellow;
+  --mdc-snackbar-supporting-text-color: white;
+}

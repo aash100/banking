@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
 import { MatDatepickerControl, MatDatepickerPanel } from '@angular/material/datepicker';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-register',
@@ -35,8 +36,8 @@ export class RegisterComponent {
 
     constructor(
         private service: BankingService,
-        private toastr: ToastrService,
-        private router: Router
+        private router: Router,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -56,8 +57,15 @@ export class RegisterComponent {
         const obj ={userDetails:userDetails, pin: this.registerForm.value.pin}
         this.service.onRegister(obj).subscribe(
             (response : any) => {
-                this.router.navigate(['/login']);
-                this.toastr.success(response['message']);
+                if(response.successMsg){
+                    this.snackBar.open(response.successMsg,'', {
+                        verticalPosition: 'top',
+                        horizontalPosition: 'right',
+                        panelClass: 'success-snackbar',
+                        duration:5000
+                    });
+                    this.router.navigate(['/login']);
+                }
             }
         );
     }

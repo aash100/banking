@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-transfer-money',
@@ -18,7 +19,7 @@ export class TransferMoneyComponent {
 
     constructor(
         private service: BankingService,
-        private toastr: ToastrService,
+        private snackBar: MatSnackBar,
     ) {
     }
 
@@ -30,8 +31,15 @@ export class TransferMoneyComponent {
         };
         this.service.transferMoney(transferDetails).subscribe(
             (response: any) => {
-                this.service.refresh.emit('transfer');
-                this.toastr.success(response['msg']);
+                if(response.successMsg){
+                    this.service.refresh.emit('transfer');
+                    this.snackBar.open(response.successMsg,'', {
+                        verticalPosition: 'top',
+                        horizontalPosition: 'right',
+                        panelClass: 'success-snackbar',
+                        duration:5000
+                    });
+                }
             }
         )
     }

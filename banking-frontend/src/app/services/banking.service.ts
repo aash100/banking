@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {environment} from '../../environments/environment';
 import { Constant } from '../constant';
 import { AuthGuardService } from '../guard/auth-guard.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class BankingService {
     constructor(
         private http: HttpClient,
         private toastr: ToastrService,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -38,37 +40,43 @@ export class BankingService {
     }
 
     private handleError(error: HttpErrorResponse) {
-        if (error && error['error'] && error['error']['message'] === 'Unauthorized') {
-            this.toastr.error('Invalid username or password.');
+        console.log('error', error);
+        if (error && error['error'] ) {
+            let errorMsg='';
+            if(typeof error['error']!== 'string'){
+                errorMsg=error['error']['errorMsg'];
+            }else{
+                errorMsg=error['error'];
+            }
+            this.snackBar.open(errorMsg,'', {
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+                panelClass: 'error-snackbar',
+                duration:5000
+            });
             return throwError(error);
         }
-        return throwError(this.toastr.error(error['error']['message']));
+        return throwError(this.snackBar.open('Failed Operations','', {
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'error-snackbar',
+            duration:5000
+        }));
 
     }
 
     onFetchProfile() {
-        let header = new HttpHeaders({'Content-Type': 'application/json', 'Accept':'application/json'});
-        
-        // header = header.append('Authorization', 'Bearer '+ this.authService.getAuthorizationToken());
-    //   headers.append('Authorization','Bearer '+ authToken);
-
-        return this.http.get(Constant.userDetails, {headers: header}).pipe(catchError(error => this.handleError(error)));
+        return this.http.get(Constant.userDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     onUpdateProfile(userDetails: { dob: string; name: string; email: string }) {
-        let headers = new HttpHeaders();
-        // headers = headers.append('token', this.token);
-        const options = {headers};
-        return this.http.put(this.UserUrl, userDetails, options).pipe(tap(() => {
+        return this.http.put(this.UserUrl, userDetails).pipe(tap(() => {
             this.refreshNeeded$.next();
         }), catchError(error => this.handleError(error)));
     }
 
     onRegister(userDetails: any) {
-        let headers = new HttpHeaders();
-        // headers=headers.append('Access-Control-Allow-Origin' , '*').append('Access-Control-Allow-Headers','Content-Type').append('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, OPTIONS');
-        const options = {headers};
-        return this.http.post(this.UserUrl, userDetails);
+        return this.http.post(this.UserUrl, userDetails).pipe(catchError(error => this.handleError(error)));
     }
 
     onGetAccount() {

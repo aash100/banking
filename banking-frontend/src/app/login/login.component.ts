@@ -5,6 +5,7 @@ import { BankingService } from '../services/banking.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthGuardService } from '../guard/auth-guard.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,8 @@ export class LoginComponent {
     password: new FormControl(null, [Validators.required, Validators.minLength(8)])
   });
   responseReceived: boolean = false;
-  constructor(private router: Router, private service: BankingService, private toastrService: ToastrService, private authService: AuthGuardService){}
+  constructor(private router: Router, private service: BankingService, private authService: AuthGuardService,
+    private snackBar: MatSnackBar){}
 
   login() {
     this.responseReceived = false;
@@ -29,29 +31,32 @@ export class LoginComponent {
     console.log(loginDetails);
     this.service.loginCall(loginDetails).subscribe(
       (response:any) => {
+        if(response.successMsg){
+          let token = response.data
           this.responseReceived = true;
-          console.log('response-body: ', response);
-          this.authService.setAuthorizationToken(response['token']);
-          // sessionStorage.setItem('auth-token', response['token']);
-          // sessionStorage.setItem('userName', response['user']['name']);
-          // sessionStorage.setItem('contactNo', response['user']['contactno']);
-          this.toastrService.success('Login Successful', 'success');
-          // this.toastr.success('Login Successful');
-          this.service.onFetchProfile().subscribe((response:any)=>{
-            console.log(response);
-            this.service.name.next(response['name']);
+          this.authService.setAuthorizationToken(token);
+          this.snackBar.open(response.successMsg,'', {
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'success-snackbar',
+            duration:5000
           });
           this.router.navigate(['/home']);
+        }
+          
       },
       (error: HttpErrorResponse) => {
           this.responseReceived = true
       }
     );
-    // setTimeout(()=>{
-    //   this.service.onFetchProfile().subscribe((response:any)=>{
-    //     console.log(response);
-    //   });
-    // },5000);
 }
 
+}
+
+export enum ToasterPosition {
+  topRight = 'toast-top-right',
+  topLeft = 'toast-top-left',
+  bottomRight = 'toast-bottom-right',
+  bottomLeft= 'toast-bottom-left',
+  // Other positions you would like
 }

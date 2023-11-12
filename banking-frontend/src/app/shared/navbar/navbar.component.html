@@ -1,16 +1,31 @@
-<!-- <div class="center col-sm-12">
-    <div style="width: 193px; margin: 0 auto 20px;"> <img src="gif/logo.png" class="width100" alt=""> </div>
 
-    <div style = "font-size: 20px; color: #333;"id="hdfcwelcmetxtId"> Welcome to NetBanking </div>
 
-</div> -->
-<!-- <div style=" width: 25%; margin: 100px;"> -->
     <mat-card style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <div style="float: left;">
-            <label> Welcome {{name}}</label>
+        <!-- <div style="float: left;">
+            <label *ngIf="name"> Welcome {{name}}</label>
 
+        </div> -->
+        <div style="float: right;">
+            <!-- <i class="fas fa-power-off" title="Log out" (click)="onLogout()"></i> -->
+           
+            <!-- <button mat-button class="logout-button" (click)="onLogout()">Logout</button> -->
         </div>
-        <mat-card-title>Welcome to Banking</mat-card-title>
+       
+        <mat-card-header>
+            <mat-card-title> {{welcomeTitle}} 
+                <!-- <div style="margin-left: 100px; width: 500px;"> -->
+                    <span *ngIf="name">
+                        <br >
+                        <button mat-button (click)="onLogout()">
+                            <mat-icon>power_settings_new</mat-icon>
+                            <span>Logout  </span>
+                          </button>
+                    </span>
+                    
+                <!-- </div> -->
+                </mat-card-title>
+           
+        </mat-card-header>
     <mat-card-content>
         <nav *ngIf="isLogin() || isRegister()" class="navbar navbar-expand-lg fixed-top navbar-transparent"
         color-on-scroll="500">
@@ -18,7 +33,8 @@
            <div class="navbar-collapse" id="navbarToggler">
                <ul class="navbar-nav ml-auto">
                    <li class="nav-item" *ngIf="isLogin()">
-                       <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Register</a>
+                       <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Sign up </a>
+                       <span style="margin-left: 8px;">New User</span>
                    </li>
                    <li class="nav-item" *ngIf="isRegister()">
                        <a routerLink="login" class="nav-link"><i class="nc-icon nc-touch-id nav-icon"></i>Login</a>
@@ -28,36 +44,12 @@
     
        </div>
     </nav>
-    <!-- <nav *ngIf="!(isLogin() || isRegister())" class="navbar navbar-expand-lg nav-margin fixed-top ">
-       <div class="container">
-           <div class="navbar-default">
-               <a class="navbar-brand" routerLink="/home">Banking System</a>
-               <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse"
-                       data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false"
-                       aria-label="Toggle navigation" (click)="sidebarToggle()">
-                   <span class="navbar-toggler-bar"></span>
-                   <span class="navbar-toggler-bar"></span>
-                   <span class="navbar-toggler-bar"></span>
-               </button>
-           </div>
-           <div class="navbar-collapse" id="navbarTogglerHome">
-               <ul class="navbar-nav ml-auto">
-                   <li class="nav-item">
-                       <a routerLink="profile" class="nav-link"><i class="nc-icon nc-single-02 nav-icon"></i>Profile</a>
-                   </li>
-                   <li class="nav-item">
-                       <a routerLink="account" class="nav-link"><i class="nc-icon nc-book-bookmark nav-icon"></i>Account</a>
-                   </li>
-                   <li class="nav-item">
-                       <a (click)="logout()" class="nav-link"><i class="nc-icon nc-lock-circle-open nav-icon"></i>Logout</a>
-                   </li>
-               </ul>
-           </div>
-       </div>
-    </nav> -->
+    <!-- <button mat-menu-item> -->
+        
+        <!-- <span>Logout</span> -->
+      <!-- </button> -->
     </mat-card-content>
     </mat-card>
-<!-- </div> -->
 
 
 

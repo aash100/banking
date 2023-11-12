@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-withdrawal',
@@ -19,7 +20,7 @@ export class WithdrawalComponent {
 
     constructor(
         private service: BankingService,
-        private toastr: ToastrService,
+        private snackBar: MatSnackBar,
     ) {
       // this.service.accountNumber.subscribe(val=>this.accountNumber = val);
     }
@@ -31,8 +32,15 @@ export class WithdrawalComponent {
         };
         this.service.withdrawMoney(transferDetails).subscribe(
             (response: any) => {
-                this.service.refresh.emit('transfer');
-                this.toastr.success(response['msg']);
+                if(response.successMsg){
+                    this.service.refresh.emit('transfer');
+                    this.snackBar.open(response.successMsg,'', {
+                        verticalPosition: 'top',
+                        horizontalPosition: 'right',
+                        panelClass: 'success-snackbar',
+                        duration:5000
+                    });
+                }
             }
         )
     }

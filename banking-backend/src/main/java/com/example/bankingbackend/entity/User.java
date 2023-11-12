@@ -18,15 +18,6 @@ public class User {
 	private String contactNo;
 	private String dob;
 
-	private String pin;
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
 	public String getDob() {
 		return dob;
 	}

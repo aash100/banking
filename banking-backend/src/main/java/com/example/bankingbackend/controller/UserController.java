@@ -1,12 +1,15 @@
 package com.example.bankingbackend.controller;
 
 
+import com.example.bankingbackend.dto.ErrorResponse;
 import com.example.bankingbackend.dto.LoginRequest;
+import com.example.bankingbackend.dto.SuccessResponse;
 import com.example.bankingbackend.dto.UserResponse;
 import com.example.bankingbackend.entity.User;
 import com.example.bankingbackend.mapper.UserMapper;
 import com.example.bankingbackend.security.JwtTokenUtil;
 import com.example.bankingbackend.service.UserService;
+import com.example.bankingbackend.wrapper.CommonResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +41,7 @@ public class UserController {
 
     
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(@RequestBody UserMapper userMapper) {
+    public ResponseEntity<CommonResponseMapper<UserResponse>> registerUser(@RequestBody UserMapper userMapper) {
         User registeredUser = userService.registerUser(userMapper);
         
         UserResponse userResponse = new UserResponse();
@@ -50,11 +53,11 @@ public class UserController {
         userResponse.setAccountType(registeredUser.getAccount().getAccountType());
 //        userResponse.setIFSC_code(registeredUser.getAccount().getIFSC_code());
 //        userResponse.setBranch(registeredUser.getAccount().getBranch());
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(new CommonResponseMapper<UserResponse>(userResponse, "Registered Successfully", null));
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<CommonResponseMapper<String>> login(@RequestBody LoginRequest loginRequest) {
         try {
             // Authenticate the user with the userId and password
             authenticationManager.authenticate(
@@ -62,7 +65,9 @@ public class UserController {
             );
         } catch (BadCredentialsException e) {
             // Invalid credentials, return 401 Unauthorized
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid User Id or Password");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid User Id or Password");
+            return new ResponseEntity<>(new CommonResponseMapper<>(null, null, "Invalid User Id or Password") , HttpStatus.UNAUTHORIZED);
+
         }
 
         // If authentication successful, generate JWT token
@@ -71,8 +76,9 @@ public class UserController {
         String token = jwtTokenUtil.generateToken(userDetails);
         Map<String, String> result =  new HashMap<>();
         result.put("token", token);
+        CommonResponseMapper<String> data = new CommonResponseMapper<String>(token, "LoggedIn Successfully", null);
         // Return the JWT token in the response
-        return new ResponseEntity<>(result , HttpStatus.OK);
+        return new ResponseEntity<>(data , HttpStatus.OK);
     }
 
 }

@@ -7,6 +7,7 @@ import com.example.bankingbackend.dto.TransactionDTO;
 import com.example.bankingbackend.service.AccountService;
 import com.example.bankingbackend.service.TransactionService;
 import com.example.bankingbackend.util.LoggedinUser;
+import com.example.bankingbackend.wrapper.CommonResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,33 +72,33 @@ public class AccountController {
 //     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> cashDeposit(@RequestBody AmountRequest amountRequest) {
+    public ResponseEntity<CommonResponseMapper<String>> cashDeposit(@RequestBody AmountRequest amountRequest) {
         accountService.cashDeposit(LoggedinUser.getAccountNumber(), amountRequest.getPin(), amountRequest.getAmount());
         
         Map<String, String> response =  new HashMap<>();
         response.put("msg", "Cash deposited successfully");
         
-        return new ResponseEntity<>( response, HttpStatus.OK);
+        return new ResponseEntity<>( new CommonResponseMapper<String>("","Cash deposited successfully",null ), HttpStatus.OK);
         
      }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> cashWithdrawal(@RequestBody AmountRequest amountRequest) {
+    public ResponseEntity<CommonResponseMapper<String>> cashWithdrawal(@RequestBody AmountRequest amountRequest) {
         accountService.cashWithdrawal(LoggedinUser.getAccountNumber(), amountRequest.getPin(), amountRequest.getAmount());
         
         Map<String, String> response =  new HashMap<>();
         response.put("msg", "Cash withdrawn successfully");
         
-        return new ResponseEntity<>( response, HttpStatus.OK);
+        return new ResponseEntity<>( new CommonResponseMapper<String>("","Cash withdrawn successfully",null ), HttpStatus.OK);
     }
 
     @PostMapping("/fund-transfer")
-    public ResponseEntity<?> fundTransfer(@RequestBody FundTransferRequest fundTransferRequest) {
+    public ResponseEntity<CommonResponseMapper<String>> fundTransfer(@RequestBody FundTransferRequest fundTransferRequest) {
         accountService.fundTransfer(LoggedinUser.getAccountNumber(), fundTransferRequest.getTargetAccountNumber(), fundTransferRequest.getPin(), fundTransferRequest.getAmount());
        Map<String, String> response =  new HashMap<>();
         response.put("msg", "Fund transferred successfully");
         
-        return new ResponseEntity<>( response, HttpStatus.OK);
+        return new ResponseEntity<>( new CommonResponseMapper<String>("","Fund transferred successfully",null ), HttpStatus.OK);
     }
     
     

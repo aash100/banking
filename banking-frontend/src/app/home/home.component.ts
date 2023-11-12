@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit{
     }
 
     ngOnInit(): void {
+      this.service.onFetchProfile().subscribe((response:any)=>{
+        console.log(response);
+        this.service.name.next(response['name']);
+      });
       // this.router.events.subscribe((res) => {
       //     return this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
       // });

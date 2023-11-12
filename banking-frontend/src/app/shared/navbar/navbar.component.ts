@@ -2,6 +2,7 @@ import {Component, OnInit, ElementRef} from '@angular/core';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {Router} from '@angular/router';
 import { BankingService } from 'src/app/services/banking.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-navbar',
@@ -9,18 +10,22 @@ import { BankingService } from 'src/app/services/banking.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
     private toggleButton: any;
     private sidebarVisible: boolean;
-    name: string='';
+    welcomeTitle='Welcome to Banking';
+    name: string = '';
 
-    constructor(public location: Location, private element: ElementRef, private router: Router, private service: BankingService) {
+    constructor(public location: Location, private element: ElementRef, private router: Router, private service: BankingService, public cookie: CookieService) {
         this.sidebarVisible = false;
         this.service.name.subscribe((val:string)=>{
             this.name= val;
+            this.welcomeTitle = "Welcome "+ this.name + " to Banking";
         })
     }
 
     ngOnInit() {
+        this.welcomeTitle = "Welcome "+ this.name + " to Banking";
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
     }
@@ -81,8 +86,12 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    logout() {
-        sessionStorage.clear();
+
+    onLogout() {
+        this.cookie.deleteAll();
         this.router.navigate(['/login']);
+        this.name = '';
+        this.welcomeTitle='Welcome to Banking';
+
     }
 }

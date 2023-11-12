@@ -110,12 +110,12 @@ public class AccountServiceImpl implements AccountService {
             throw new NotFoundException("Account not found");
         }
 
-//        if (!passwordEncoder.matches(pin, account.getPin())) {
-//            throw new UnauthorizedException("Invalid PIN");
-//        }
-        if (!account.getPin().equals(pin)) {
+        if (!passwordEncoder.matches(pin, account.getPin())) {
             throw new UnauthorizedException("Invalid PIN");
         }
+//        if (!account.getPin().equals(pin)) {
+//            throw new UnauthorizedException("Invalid PIN");
+//        }
 
         double currentBalance = account.getBalance();
         double newBalance = currentBalance + amount;
@@ -138,7 +138,7 @@ public class AccountServiceImpl implements AccountService {
             throw new NotFoundException("Account not found");
         }
 
-        if (!account.getPin().equals(pin)) {
+        if (!passwordEncoder.matches(pin, account.getPin())) {
             throw new UnauthorizedException("Invalid PIN");
         }
 
@@ -173,12 +173,16 @@ public class AccountServiceImpl implements AccountService {
             throw new NotFoundException("Target account not found");
         }
 
-//        if (!passwordEncoder.matches(pin, sourceAccount.getPin())) {
-//            throw new UnauthorizedException("Invalid PIN");
-//        }
-        if (!sourceAccount.getPin().equals(pin)) {
+        if(sourceAccountNumber.equals(targetAccountNumber)){
+            throw new UnauthorizedException("Source and Target Account can't be same");
+        }
+
+        if (!passwordEncoder.matches(pin, sourceAccount.getPin())) {
             throw new UnauthorizedException("Invalid PIN");
         }
+//        if (!sourceAccount.getPin().equals(pin)) {
+//            throw new UnauthorizedException("Invalid PIN");
+//        }
 
         double sourceBalance = sourceAccount.getBalance();
         if (sourceBalance < amount) {

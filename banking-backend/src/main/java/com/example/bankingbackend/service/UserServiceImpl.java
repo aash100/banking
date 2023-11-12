@@ -2,6 +2,7 @@ package com.example.bankingbackend.service;
 
 import com.example.bankingbackend.entity.Account;
 import com.example.bankingbackend.entity.User;
+import com.example.bankingbackend.exception.UnauthorizedException;
 import com.example.bankingbackend.exception.UserValidation;
 import com.example.bankingbackend.mapper.UserMapper;
 import com.example.bankingbackend.repository.UserRepository;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService{
     
     @Override
     public User registerUser(UserMapper userMapper) {
+        if(userRepository.findByEmail(userMapper.getUserDetails().getEmail())!=null){
+            throw new UnauthorizedException("Email already exists");
+        }
         User user = userMapper.getUserDetails();
     	 String encodedPassword = passwordEncoder.encode(user.getPassword());
          user.setPassword(encodedPassword);
@@ -40,7 +44,9 @@ public class UserServiceImpl implements UserService{
 
         // Create an account for the user
         Account account = accountService.createAccount(savedUser);
-        account.setPin(userMapper.getPin());
+        String encodedPIN = passwordEncoder.encode(userMapper.getPin());
+
+        account.setPin(encodedPIN);
         savedUser.setAccount(account);
         userRepository.save(savedUser);
         
