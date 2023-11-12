@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,11 +8,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     templateUrl: './transfer-money.component.html',
     styleUrls: ['./transfer-money.component.css']
 })
-export class TransferMoneyComponent {
+export class TransferMoneyComponent implements OnInit{
   transferMoneyForm = new FormGroup(
     {
-        transferTo: new FormControl(null, Validators.required),
-        amount: new FormControl(null, Validators.required),
+        transferTo: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+        amount: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
         pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
     });
 
@@ -23,6 +22,14 @@ export class TransferMoneyComponent {
     ) {
     }
 
+    ngOnInit(): void {
+        this.transferMoneyForm = new FormGroup(
+            {
+                transferTo: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+                amount: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+                pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
+            });
+    }
     transferMoneyFormSubmit() {
         const transferDetails = {
             targetAccountNumber: this.transferMoneyForm.value.transferTo,
@@ -31,6 +38,7 @@ export class TransferMoneyComponent {
         };
         this.service.transferMoney(transferDetails).subscribe(
             (response: any) => {
+                this.transferMoneyForm.reset();
                 if(response.successMsg){
                     this.service.refresh.emit('transfer');
                     this.snackBar.open(response.successMsg,'', {

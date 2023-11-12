@@ -15,9 +15,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RegisterComponent {
 
-    // emailPattern: String ='^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
-    // contactNoPattern: String = '^[6,7,8,9]{1}[0-9]{10}$';
-    // pinPattern: string;
     formValid: boolean = true;
 
     registerForm = new FormGroup(
@@ -43,15 +40,16 @@ export class RegisterComponent {
 
 
     submitForm() {
+        let value : string | any = this.registerForm.value.dob;
+        let arr = value.toString().split(" ");
+        let dob = arr[1]+'-'+arr[2]+'-'+arr[3];
         const userDetails = {
             name: this.registerForm.value.name,
             email: this.registerForm.value.email,
             contactNo: this.registerForm.value.contactNo,
             password: this.registerForm.value.password,
             address: this.registerForm.value.address,
-            dob: this.registerForm.value.dob? this.registerForm.value.dob['year'] + '-'
-                + (this.registerForm.value.dob['month'] < 10 ? '0' + this.registerForm.value.dob['month'] : this.registerForm.value.dob['month']) + '-'
-                + (this.registerForm.value.dob['day'] < 10 ? '0' + this.registerForm.value.dob['day'] : this.registerForm.value.dob['day']):''
+            dob: dob
 
         };
         const obj ={userDetails:userDetails, pin: this.registerForm.value.pin}

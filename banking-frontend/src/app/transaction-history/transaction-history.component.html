@@ -16,4 +16,5 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   
       </mat-table>
+      <div *ngIf="noRecordFound" style="padding: 23px;">No Transaction History Found</div>
     </div>

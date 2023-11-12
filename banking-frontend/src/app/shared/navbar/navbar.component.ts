@@ -3,6 +3,7 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import {Router} from '@angular/router';
 import { BankingService } from 'src/app/services/banking.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Subscription, map, share, timer } from 'rxjs';
 
 @Component({
     selector: 'app-navbar',
@@ -16,18 +17,30 @@ export class NavbarComponent implements OnInit {
     welcomeTitle='Welcome to Banking';
     name: string = '';
 
+    time = new Date();
+    intervalId: any;
+
     constructor(public location: Location, private element: ElementRef, private router: Router, private service: BankingService, public cookie: CookieService) {
         this.sidebarVisible = false;
         this.service.name.subscribe((val:string)=>{
             this.name= val;
             this.welcomeTitle = "Welcome "+ this.name + " to Banking";
-        })
+        });
+
+        this.intervalId = setInterval(() => {
+            this.time = new Date();
+          }, 1000);
+      
     }
 
     ngOnInit() {
         this.welcomeTitle = "Welcome "+ this.name + " to Banking";
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+    }
+
+    ngOnDestroy(): void {
+        clearInterval(this.intervalId);
     }
 
     sidebarOpen() {

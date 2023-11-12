@@ -1,27 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationStart, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-deposit',
   templateUrl: './deposit.component.html',
   styleUrls: ['./deposit.component.css']
 })
-export class DepositComponent {
-  depositForm = new FormGroup(
-    {
-      amount: new FormControl(null, Validators.required),
-      pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
-    });
-  accountNumber = '';
+export class DepositComponent implements OnInit, OnDestroy{
+    depositForm = new FormGroup(
+      {
+        amount: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+        pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
+      }
+    );
+    browserRefresh: boolean = false;
+    subscription: Subscription;
+    private depositMoneySubscription: Subscription = new Subscription;
+    constructor(private service: BankingService, private snackBar: MatSnackBar, private router: Router) {
+      this.subscription = router.events.subscribe((event) => {
+        if (event instanceof NavigationStart) {
+           this.browserRefresh = !router.navigated;
+        }
+      });
+     }
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+      this.depositMoneySubscription.unsubscribe();
+    }
+    
+    ngOnInit(){
 
-    constructor(
-        private service: BankingService,
-        private snackBar: MatSnackBar,
-    ) {
-      // this.service.accountNumber.subscribe(val=>this.accountNumber = val);
+      this.depositForm = new FormGroup(
+        {
+          amount: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+          pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')]),
+        }
+      );
     }
 
     depositFormSubmit() {
@@ -29,8 +47,11 @@ export class DepositComponent {
             amount: this.depositForm.value.amount,
             pin: this.depositForm.value.pin
         };
-        this.service.depositMoney(transferDetails).subscribe(
+        this.depositMoneySubscription = this.service.depositMoney(transferDetails).subscribe(
             (response: any) => {
+              this.depositForm.reset();
+              // this.depositForm.value.amount = undefined;
+              // this.depositForm.value.pin = undefined;
               if(response.successMsg){
                 this.service.refresh.emit('transfer');
                   this.snackBar.open(response.successMsg,'', {

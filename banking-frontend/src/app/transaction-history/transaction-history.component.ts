@@ -19,10 +19,12 @@ export class TransactionHistoryComponent implements OnInit {
       { columnDef: 'targetAccountNumber',   header: 'Transferred To'},
       { columnDef: 'amount',   header: 'Amount' },
       { columnDef: 'transactionType',   header: 'Transaction Type' },
+      { columnDef: 'transactionDate',   header: 'Transaction Date & Time' },
+      
     ];
   
     displayedColumns = this.columns.map(c => c.columnDef);
-
+    noRecordFound: boolean = false;
     constructor(private service: BankingService) {
       this.service.refresh.subscribe(()=>{this.getTransactions();});
     }
@@ -34,7 +36,11 @@ export class TransactionHistoryComponent implements OnInit {
     getTransactions(){
       this.service.getTransactions().subscribe(
       (response: any) => {
-            this.dataSource = new MatTableDataSource(response);
+            if(response.data && response.data.length>0){
+              this.dataSource = new MatTableDataSource(response.data);
+            }else{
+              this.noRecordFound = true;
+            }
           }
       );
 

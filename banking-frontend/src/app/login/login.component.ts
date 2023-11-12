@@ -28,10 +28,10 @@ export class LoginComponent {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     };
-    console.log(loginDetails);
     this.service.loginCall(loginDetails).subscribe(
       (response:any) => {
         if(response.successMsg){
+          this.loginForm.reset();
           let token = response.data
           this.responseReceived = true;
           this.authService.setAuthorizationToken(token);

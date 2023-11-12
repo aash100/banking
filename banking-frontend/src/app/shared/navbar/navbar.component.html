@@ -14,6 +14,11 @@
         <mat-card-header>
             <mat-card-title> {{welcomeTitle}} 
                 <!-- <div style="margin-left: 100px; width: 500px;"> -->
+                    
+                    
+                <!-- </div> -->
+                </mat-card-title>
+                <mat-card-title>
                     <span *ngIf="name">
                         <br >
                         <button mat-button (click)="onLogout()">
@@ -21,25 +26,25 @@
                             <span>Logout  </span>
                           </button>
                     </span>
-                    
-                <!-- </div> -->
                 </mat-card-title>
            
         </mat-card-header>
     <mat-card-content>
+        <div *ngIf="name">{{ time | date: 'hh:mm:ss a' }}</div>
+
         <nav *ngIf="isLogin() || isRegister()" class="navbar navbar-expand-lg fixed-top navbar-transparent"
         color-on-scroll="500">
        <div class="container">
            <div class="navbar-collapse" id="navbarToggler">
-               <ul class="navbar-nav ml-auto">
-                   <li class="nav-item" *ngIf="isLogin()">
-                       <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Sign up </a>
-                       <span style="margin-left: 8px;">New User</span>
-                   </li>
-                   <li class="nav-item" *ngIf="isRegister()">
+               <!-- <ul class="navbar-nav ml-auto"> -->
+                   <span class="nav-item" *ngIf="isLogin()">
+                    <span style="margin-left: 8px;">New User ? </span>
+                       <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Register here </a>
+                   </span>
+                   <span class="nav-item" *ngIf="isRegister()">
                        <a routerLink="login" class="nav-link"><i class="nc-icon nc-touch-id nav-icon"></i>Login</a>
-                   </li>
-               </ul>
+                   </span>
+               <!-- </ul> -->
            </div>
     
        </div>

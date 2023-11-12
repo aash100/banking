@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute,Router, RouterLinkActive, Routes } from '@angular/router';
 import { BankingService } from '../services/banking.service';
+import { Subscription, map, share, timer } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -22,22 +23,20 @@ export class HomeComponent implements OnInit{
       { path: '/profile', label: 'User Profile' }
     ];
     activeLink = this.navLinks[0];
+    
+
     constructor(private router: Router, private service: BankingService){
-      // this.navLinks = [
-      //   { path: 'account', label: 'Check Balance' },
-      //   { path: 'history', label: 'Transaction History' },
-      //   { path: 'transfer', label: 'Transfer Money' },
-      //   { path: 'profile', label: 'User Profile' }
-      // ];
-      // this.navLinks = this.buildNavItems(this.router.config);
 
     }
+  
 
     ngOnInit(): void {
       this.service.onFetchProfile().subscribe((response:any)=>{
         console.log(response);
         this.service.name.next(response['name']);
       });
+
+      
       // this.router.events.subscribe((res) => {
       //     return this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
       // });

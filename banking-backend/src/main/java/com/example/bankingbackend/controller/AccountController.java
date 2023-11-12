@@ -103,8 +103,11 @@ public class AccountController {
     
     
     @GetMapping("/transactions")
-    public ResponseEntity<List<TransactionDTO>> getAllTransactionsByAccountNumber() {
+    public ResponseEntity<CommonResponseMapper<List<TransactionDTO>>> getAllTransactionsByAccountNumber() {
         List<TransactionDTO> transactions = transactionService.getAllTransactionsByAccountNumber(LoggedinUser.getAccountNumber());
-        return ResponseEntity.ok(transactions);
+//        CommonResponseMapper<List<TransactionDTO>> tr= new CommonResponseMapper<List<TransactionDTO>>(transactions,"Transactions fetched successfully",null );
+//        return ResponseEntity.ok(transactions);
+        return new ResponseEntity<>( new CommonResponseMapper<List<TransactionDTO>>(transactions,"Fund transferred successfully",null ), HttpStatus.OK);
+
     }
 }

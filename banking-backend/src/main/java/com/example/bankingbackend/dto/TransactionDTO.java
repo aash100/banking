@@ -11,7 +11,7 @@ public class TransactionDTO {
     private Long id; 
     private double amount;
     private String transactionType;
-    private Date transactionDate;
+    private String transactionDate;
     private String sourceAccountNumber;
     private String targetAccountNumber;
 }
