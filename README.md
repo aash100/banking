@@ -20,7 +20,7 @@ This project helps us to understand the basic working of Bank accounts and their
 **1. Clone the repository**
     git clone https://github.com/aash100/banking.git
 
-**2. Move to root directory of backend**
+**2. Move to root directory of backend and open in command line**
 
 **3. Build project**
     mvn clean install
@@ -47,7 +47,7 @@ The app defines following APIs.
 
 # Steps To Setup Frontend
 
-**1. Move To Frontend Directory**
+**1. Move To Frontend Directory and open in command line**
 
 **2. Install Package**
     npm install
