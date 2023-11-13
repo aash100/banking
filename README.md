@@ -36,13 +36,14 @@ i.e. http://localhost:8080/
 
 The app defines following APIs. 
  
-    POST /api/signup   
-    POST /api/user
-    GET /api/user
-    PUT /api/user
-    GET /api/account
-    POST /api/transfer
-    GET /api/transaction      
+    POST /api/users/login   
+    POST /api/users/register
+    GET /api/dashboard/user
+    GET /api/dashboard/account
+    POST /api/account/deposit
+    POST /api/account/withdraw
+    POST /api/account/fund-transfer
+    GET /api/account/transactions   
 
 # Steps To Setup Frontend
 
