@@ -15,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 
 @SpringBootApplication
-//@EnableCaching // Add this annotation to enable caching support
-//@EnableAutoConfiguration
 @EnableAsync
 public class BankingBackendApplication {
 

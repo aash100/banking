@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 	public User registerUser(UserMapper userMapper);
 
-	User getUserByAccountNumber(String account_no);
+	public User getUserByAccountNumber(String account_no);
 
 	public void saveUser(User user);
 
-	User updateUser(User user);
 }

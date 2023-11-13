@@ -19,8 +19,7 @@ public class TransactionMapper {
         if (transaction.getTargetAccount() != null) {
             dto.setTargetAccountNumber(transaction.getTargetAccount().getAccountNumber());
         } else {
-            // Handle the case where target account is null (e.g., set a default value or do nothing)
-            dto.setTargetAccountNumber("N/A"); // Replace "N/A" with an appropriate default value
+            dto.setTargetAccountNumber("Self");
         }
         return dto;
     }

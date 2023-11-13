@@ -9,7 +9,10 @@ import com.example.bankingbackend.exception.UnauthorizedException;
 import com.example.bankingbackend.repository.AccountRepository;
 import com.example.bankingbackend.repository.TransactionRepository;
 import com.example.bankingbackend.repository.UserRepository;
+import com.example.bankingbackend.security.JwtAuthenticationFilter;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private UserRepository userRepository;
 
+    private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 	@Override
     public Account createAccount(User user) {
         String accountNumber = generateUniqueAccountNumber();
@@ -42,67 +46,16 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 	
-//	@Override
-//    public boolean isPinCreated(String accountNumber) {
-//        Account account = accountRepository.findByAccountNumber(accountNumber);
-//        if (account == null) {
-//            throw new NotFoundException("Account not found");
-//        }
-//
-//        return account.getPin()!=null;
-//    }
-    
 	private String generateUniqueAccountNumber() {
 	    String accountNumber;
 	    do {
-	        // Generate a UUID as the account number
             Random rand = new Random();
             accountNumber = String.valueOf(rand.nextInt((100000000 - 10000000) + 1) + 10000000);
-//            accountNumber = String.valueOf(rand.nextLong(100000000));
-//	        accountNumber = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);
 	    } while (accountRepository.findByAccountNumber(accountNumber) != null);
 
 	    return accountNumber;
 	}
 
-    
-    
-//    @Override
-//    public void createPIN(String accountNumber, String password, String pin) {
-//        Account account = accountRepository.findByAccountNumber(accountNumber);
-//        if (account == null) {
-//            throw new NotFoundException("Account not found");
-//        }
-//
-//        if (!passwordEncoder.matches(password, account.getUser().getPassword())) {
-//            throw new UnauthorizedException("Invalid password");
-//        }
-//
-//        account.setPin(passwordEncoder.encode(pin));
-//        accountRepository.save(account);
-//    }
-    
-//    @Override
-//    public void updatePIN(String accountNumber, String oldPIN, String password, String newPIN) {
-//    	System.out.println(accountNumber+"  "+oldPIN+" "+newPIN+"  "+password);
-//
-//        Account account = accountRepository.findByAccountNumber(accountNumber);
-//        if (account == null) {
-//            throw new NotFoundException("Account not found");
-//        }
-//
-//        if (!passwordEncoder.matches(oldPIN, account.getPin())) {
-//            throw new UnauthorizedException("Invalid PIN");
-//        }
-//
-//        if (!passwordEncoder.matches(password, account.getUser().getPassword())) {
-//            throw new UnauthorizedException("Invalid password");
-//        }
-//
-//        account.setPin(passwordEncoder.encode(newPIN));
-//        accountRepository.save(account);
-//    }
-    
     @Override
     @Transactional
     public void cashDeposit(String accountNumber, String pin, double amount) {
@@ -114,9 +67,6 @@ public class AccountServiceImpl implements AccountService {
         if (!passwordEncoder.matches(pin, account.getPin())) {
             throw new UnauthorizedException("Invalid PIN");
         }
-//        if (!account.getPin().equals(pin)) {
-//            throw new UnauthorizedException("Invalid PIN");
-//        }
 
         double currentBalance = account.getBalance();
         double newBalance = currentBalance + amount;
@@ -181,9 +131,6 @@ public class AccountServiceImpl implements AccountService {
         if (!passwordEncoder.matches(pin, sourceAccount.getPin())) {
             throw new UnauthorizedException("Invalid PIN");
         }
-//        if (!sourceAccount.getPin().equals(pin)) {
-//            throw new UnauthorizedException("Invalid PIN");
-//        }
 
         double sourceBalance = sourceAccount.getBalance();
         if (sourceBalance < amount) {

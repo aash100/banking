@@ -6,24 +6,28 @@ import com.example.bankingbackend.exception.UnauthorizedException;
 import com.example.bankingbackend.exception.UserValidation;
 import com.example.bankingbackend.mapper.UserMapper;
 import com.example.bankingbackend.repository.UserRepository;
+import com.example.bankingbackend.security.JwtAuthenticationFilter;
 import com.example.bankingbackend.util.LoggedinUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
 
-	private final UserRepository userRepository;
-    private final AccountService accountService;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+	private UserRepository userRepository;
 
+    @Autowired
+    private AccountService accountService;
 
-    public UserServiceImpl(UserRepository userRepository, AccountService accountService,PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.accountService = accountService;
-        this.passwordEncoder =  passwordEncoder;
-    }
-    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public User getUserByAccountNumber(String account_no) {
     	return userRepository.findByAccountAccountNumber(account_no);
@@ -62,33 +66,5 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 		
 	}
-
-    @Override
-    public User updateUser(User user) {
-        User existingUser = userRepository.findByAccountAccountNumber(LoggedinUser.getAccountNumber());
-        if(user.getEmail() != null){
-            if(user.getEmail().isEmpty())
-                throw new UserValidation("Email can't be empty");
-            else
-                existingUser.setEmail(user.getEmail());
-        }
-        if(user.getName() != null){
-            if(user.getName().isEmpty())
-                throw new UserValidation("Name can't be empty");
-            else
-                existingUser.setName(user.getName());
-        }
-        if(user.getContactNo() != null){
-            if(user.getContactNo().isEmpty())
-                throw new UserValidation("Phone number can't be empty");
-            else
-                existingUser.setContactNo(user.getContactNo());
-        }
-        if(user.getAddress() != null){
-            existingUser.setAddress(user.getAddress());
-        }
-        return userRepository.save(existingUser);
-    }
-
 
 }

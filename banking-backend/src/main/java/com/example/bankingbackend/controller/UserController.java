@@ -7,9 +7,12 @@ import com.example.bankingbackend.dto.SuccessResponse;
 import com.example.bankingbackend.dto.UserResponse;
 import com.example.bankingbackend.entity.User;
 import com.example.bankingbackend.mapper.UserMapper;
+import com.example.bankingbackend.security.JwtAuthenticationFilter;
 import com.example.bankingbackend.security.JwtTokenUtil;
 import com.example.bankingbackend.service.UserService;
 import com.example.bankingbackend.wrapper.CommonResponseMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +42,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
     
     @PostMapping("/register")
     public ResponseEntity<CommonResponseMapper<UserResponse>> registerUser(@RequestBody UserMapper userMapper) {
@@ -51,8 +55,6 @@ public class UserController {
         userResponse.setAddress(registeredUser.getAddress());
         userResponse.setId(registeredUser.getId());
         userResponse.setAccountType(registeredUser.getAccount().getAccountType());
-//        userResponse.setIFSC_code(registeredUser.getAccount().getIFSC_code());
-//        userResponse.setBranch(registeredUser.getAccount().getBranch());
         return ResponseEntity.ok(new CommonResponseMapper<UserResponse>(userResponse, "Registered Successfully", null));
     }
     
@@ -65,17 +67,13 @@ public class UserController {
             );
         } catch (BadCredentialsException e) {
             // Invalid credentials, return 401 Unauthorized
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid User Id or Password");
             return new ResponseEntity<>(new CommonResponseMapper<>(null, null, "Invalid User Id or Password") , HttpStatus.UNAUTHORIZED);
-
         }
 
         // If authentication successful, generate JWT token
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         System.out.println(userDetails);
         String token = jwtTokenUtil.generateToken(userDetails);
-        Map<String, String> result =  new HashMap<>();
-        result.put("token", token);
         CommonResponseMapper<String> data = new CommonResponseMapper<String>(token, "LoggedIn Successfully", null);
         // Return the JWT token in the response
         return new ResponseEntity<>(data , HttpStatus.OK);

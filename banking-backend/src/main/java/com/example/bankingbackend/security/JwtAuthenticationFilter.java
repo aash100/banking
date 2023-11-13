@@ -21,17 +21,13 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	/*
-	 *  Filter class that handles JWT authentication and authorization for each request.
-	 * */
-
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
+	private Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

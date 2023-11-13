@@ -5,6 +5,9 @@ import com.example.bankingbackend.entity.Transaction;
 import com.example.bankingbackend.mapper.TransactionMapper;
 import com.example.bankingbackend.repository.TransactionRepository;
 import com.example.bankingbackend.repository.UserRepository;
+import com.example.bankingbackend.security.JwtAuthenticationFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 @Autowired
 	    private TransactionMapper transactionMapper;
 
+	private Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 	 @Override
 	 public List<TransactionDTO> getAllTransactionsByAccountNumber(String value) {
 		 String accountNumber= userRepository.findByEmail(value).getAccount().getAccountNumber();

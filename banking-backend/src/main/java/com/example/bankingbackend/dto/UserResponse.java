@@ -13,8 +13,6 @@ public class UserResponse  {
     private String address;
     private String contactNo;
     private String accountNumber;
-//    private String IFSC_code;
-//    private String branch;
     private String accountType;
     
     

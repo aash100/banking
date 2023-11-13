@@ -8,6 +8,9 @@ import com.example.bankingbackend.entity.User;
 import com.example.bankingbackend.exception.NotFoundException;
 import com.example.bankingbackend.repository.AccountRepository;
 import com.example.bankingbackend.repository.UserRepository;
+import com.example.bankingbackend.security.JwtAuthenticationFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    private Logger logger = LoggerFactory.getLogger(DashboardServiceImpl.class);
 
     @Override
     public UserResponse getUserDetails(String accountNumber) {

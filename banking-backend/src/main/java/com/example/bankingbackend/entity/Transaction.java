@@ -3,12 +3,14 @@ package com.example.bankingbackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+@ToString
 public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +26,5 @@ public class Transaction {
 	@ManyToOne
 	@JoinColumn(name = "target_account_id")
 	private Account targetAccount;
-
-	@Override
-	public String toString() {
-		return "Transaction [id=" + id + ", amount=" + amount + ", transaction_type=" + transaction_type
-				+ ", transaction_date=" + transaction_date + ", sourceAccount=" + sourceAccount + ", targetAccount="
-				+ targetAccount + "]";
-	}
 
 }
