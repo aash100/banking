@@ -14,7 +14,7 @@ public class TransactionMapper {
         dto.setId(transaction.getId());
         dto.setAmount(transaction.getAmount());
         dto.setTransactionType(transaction.getTransaction_type());
-        dto.setTransactionDate(new SimpleDateFormat("mm-dd-yyyy hh:mm:ss").format(transaction.getTransaction_date()));
+        dto.setTransactionDate(new SimpleDateFormat("dd-MMM-YYYY hh:mm:ss").format(transaction.getTransaction_date()));
         dto.setSourceAccountNumber(transaction.getSourceAccount().getAccountNumber());
         if (transaction.getTargetAccount() != null) {
             dto.setTargetAccountNumber(transaction.getTargetAccount().getAccountNumber());

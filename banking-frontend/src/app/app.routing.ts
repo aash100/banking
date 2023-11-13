@@ -20,7 +20,6 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
-    {path: 'profile', component: UserProfileComponent, },
     {path: 'account', component: AccountComponent, },
     {path: 'transfer', component: TransferMoneyComponent, },
     {path: 'history', component: TransactionHistoryComponent, },

@@ -1,12 +1,12 @@
 
 
 <div class="main-div" style="height: 100%;">
-    <mat-card>
-            <mat-card-header>
+    <mat-card class="sticky-card">
+            <mat-card-header class="sticky-header">
                 <p>Register Yourself</p>
             </mat-card-header>
-        <mat-card-content>
-            <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <mat-card-content class="scrollable-content">
+            <form [formGroup]="registerForm">
                   <p>
                     <mat-form-field>
                         <input type="text" matInput placeholder="Name"
@@ -40,7 +40,14 @@
                   <p>
                     <mat-form-field>
                         <input type="password" matInput placeholder="Password" id="password" name="password" formControlName="password">
-                        <mat-error *ngIf="registerForm.controls['password'].invalid">Enter a valid Password</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].invalid && !registerForm.controls['password'].hasError('minlength')">Enter a valid Password</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].hasError('minlength') && registerForm.controls['password'].touched">Password must be at least 8 characters long.</mat-error>
+                      </mat-form-field>
+                  </p>
+                  <p>
+                    <mat-form-field>
+                        <input type="password" matInput placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" appRestrictPaste>
+                        <mat-error *ngIf="registerForm.controls['confirmPassword'].invalid">Passwords do not match.</mat-error>
                     
                       </mat-form-field>
                   </p>
@@ -58,11 +65,14 @@
 
                     </mat-form-field>
                   </p>
-                    <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!registerForm.valid">Register</button>
+                    <!-- <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!registerForm.valid">Register</button> -->
 
             </form>
         </mat-card-content>
-        
+        <mat-card-actions class="sticky-footer">
+          <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  (click)="submitForm()" [disabled]="!registerForm.valid">Register</button>
+
+        </mat-card-actions>
     </mat-card>
 </div>
 

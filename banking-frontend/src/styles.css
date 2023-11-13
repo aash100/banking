@@ -41,3 +41,40 @@ mat-form-field{
 .outlined-card {
   border: 1px solid #ccc; /* Change the color and thickness as needed */
 }
+
+
+
+.sticky-card {
+  /* Set any common styles for the entire card */
+  max-width: 600px;
+  height: 600px; /* Set a fixed height for the card */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.sticky-header {
+  /* Set styles for the sticky header */
+  margin-bottom: 16px;
+  background-color: #9cc5ec;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure the header stays above the content during scrolling */
+}
+
+.scrollable-content {
+  /* Set styles for the scrollable content */
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scroll for the content */
+}
+
+.sticky-footer {
+  /* Set styles for the sticky footer */
+  background-color: whitesmoke;
+  position: sticky;
+  bottom: 0;
+  z-index: 1; /* Ensure the footer stays above the content during scrolling */
+  margin-left: 14px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

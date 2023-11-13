@@ -35,6 +35,8 @@ import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawalComponent } from './withdrawal/withdrawal.component';
 import {MatIconModule} from '@angular/material/icon';
+import { RestrictPasteDirective } from './shared/directives/restrict-paste.directive';
+import { NoStartingZeroDirective } from './shared/directives/no-starting-zero.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,9 @@ import {MatIconModule} from '@angular/material/icon';
     TransferMoneyComponent,
     UserProfileComponent,
     DepositComponent,
-    WithdrawalComponent
+    WithdrawalComponent,
+    RestrictPasteDirective,
+    NoStartingZeroDirective,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [AuthGuardService,LoginGuardService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

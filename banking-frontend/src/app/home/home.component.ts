@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit{
 
     selectedTabValue($event: any) {
         if(this.auth.getAuthorizationToken()){
-          this.service.refresh.emit('refresh');
+          this.service.refresh.next('form-reset');
         }else{
           this.router.navigate(['/login']);
           this.snackBar.open('Session Expired: Logged out successfully','', {

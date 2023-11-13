@@ -16,6 +16,7 @@
                        <a routerLink="register" class="nav-link" style="color: #004a8f;">Register here </a>
                    </span>
                    <span class="nav-item" *ngIf="isRegister()">
+                    <span style="margin-left: 8px; color: black;">Already Registered ? </span>
                        <a routerLink="login" class="nav-link" style="color: #004a8f;">Login</a>
                    </span>
            </div>
@@ -30,43 +31,6 @@
         <span>Logout</span></button> -->
     </div>
   </header>
-
-    <!-- <mat-card style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        
-        <mat-card-header>
-            <mat-card-title> {{welcomeTitle}} 
-                </mat-card-title>
-                <mat-card-title>
-                    <span *ngIf="name">
-                        <br >
-                        <button mat-button (click)="onLogout()">
-                            <mat-icon>power_settings_new</mat-icon>
-                            <span>Logout  </span>
-                          </button>
-                    </span>
-                </mat-card-title>
-           
-        </mat-card-header>
-    <mat-card-content>
-        <div *ngIf="name">{{ time | date: 'hh:mm:ss a' }}</div>
-
-        <nav *ngIf="isLogin() || isRegister()" class="navbar navbar-expand-lg fixed-top navbar-transparent"
-        color-on-scroll="500">
-       <div class="container">
-           <div class="navbar-collapse" id="navbarToggler">
-                   <span class="nav-item" *ngIf="isLogin()">
-                    <span style="margin-left: 8px;">New User ? </span>
-                       <a routerLink="register" class="nav-link"><i class="nc-icon nc-badge nav-icon"></i>Register here </a>
-                   </span>
-                   <span class="nav-item" *ngIf="isRegister()">
-                       <a routerLink="login" class="nav-link"><i class="nc-icon nc-touch-id nav-icon"></i>Login</a>
-                   </span>
-           </div>
-    
-       </div>
-    </nav>
-    </mat-card-content>
-    </mat-card> -->
 
 
 

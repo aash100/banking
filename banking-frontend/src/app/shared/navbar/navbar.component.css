@@ -11,6 +11,9 @@
     background-color: #9cc5ec;
     /* color: rgb(12, 12, 170); */
     color: #004a8f;
+    position: sticky;
+    top: 0;
+    z-index: 100; 
   }
   
   .left-content {

@@ -20,7 +20,7 @@ export class AccountComponent implements OnInit {
 
     accounts:any =[];
     constructor( private service: BankingService) {
-        this.service.refresh.subscribe(()=>{this.fetchAccountDetails();});
+        this.service.refresh.subscribe((event)=>{ if(event==='transfer'){ this.fetchAccountDetails(); }});
     }
 
     ngOnInit(): void {

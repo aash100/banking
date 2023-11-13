@@ -1,21 +1,15 @@
 <div class="main-div">
     <mat-card style="border: 1px solid #ccc;">
-            <mat-card-header>
+            <mat-card-header class="sticky-header">
                 <p>Withdraw Money</p>
             </mat-card-header>
         <mat-card-content>
             <form [formGroup]="withdrawalForm" (ngSubmit)="withdrawalFormSubmit()" autocomplete="off">
-                <!-- <p>
-                    <mat-form-field>
-                        <label >Account No. </label>
-                        <input matInput type="text" id="transferTo" placeholder="Receiver's account no." formControlName="transferTo" name="transferTo">
-                    </mat-form-field>
-                  </p> -->
                   <p>
                       <mat-form-field>
                         <label >Amount </label>
-                        <input matInput class="form-control" type="email" id="email" placeholder="Amount to Withdraw" formControlName="amount" name="amount">
-                        <mat-error *ngIf="withdrawalForm.controls['amount'].invalid">Enter a valid amount</mat-error>
+                        <input matInput class="form-control" type="email" id="email" placeholder="Amount to Withdraw" formControlName="amount" name="amount" appNoStartingZero>
+                        <mat-error *ngIf="withdrawalForm.controls['amount'].touched && withdrawalForm.controls['amount'].invalid">Enter a valid amount</mat-error>
                         <mat-hint>Max limit 100000</mat-hint>
                     </mat-form-field>
                   </p>
@@ -23,7 +17,7 @@
                     <mat-form-field>
                         <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin"
                                                name="pin" formControlName="pin">
-                        <mat-error *ngIf="withdrawalForm.controls['pin'].invalid">Enter a valid PIN</mat-error>
+                        <mat-error *ngIf="withdrawalForm.controls['pin'].touched && withdrawalForm.controls['pin'].invalid">Enter a valid PIN</mat-error>
                     </mat-form-field>
                   </p>
                   <button [ngStyle]="{'background-color': withdrawalForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!withdrawalForm.valid">Withdraw</button>

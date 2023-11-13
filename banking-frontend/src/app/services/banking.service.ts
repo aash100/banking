@@ -17,7 +17,7 @@ export class BankingService {
     public name = new Subject<string>();
     public accountNumber = new Subject<string>();
     
-    public refresh = new EventEmitter();
+    public refresh = new Subject<string>();
     
         
     constructor(

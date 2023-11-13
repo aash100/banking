@@ -26,7 +26,7 @@ export class TransactionHistoryComponent implements OnInit {
     displayedColumns = this.columns.map(c => c.columnDef);
     noRecordFound: boolean = false;
     constructor(private service: BankingService) {
-      this.service.refresh.subscribe(()=>{this.getTransactions();});
+      this.service.refresh.subscribe((event)=>{ if(event==='transfer'){ this.getTransactions(); }});
     }
 
     ngOnInit(): void {

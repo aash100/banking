@@ -10,18 +10,12 @@ export class AuthGuardService implements CanActivate {
     }
 
     canActivate(): any {
-        if (!this.isAuthenticated()) {
+        if (!this.getAuthorizationToken()) {
             return this.router.navigate(['/login']);
             // return false;
         } else {
             return true;
         }
-    }
-
-    isAuthenticated() {
-        return this.cookieService.get('authToken');
-
-        // return (sessionStorage.getItem('auth-token'));
     }
     
     setAuthorizationToken(authToken: string){

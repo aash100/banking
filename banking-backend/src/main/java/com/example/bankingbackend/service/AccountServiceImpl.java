@@ -57,7 +57,8 @@ public class AccountServiceImpl implements AccountService {
 	    do {
 	        // Generate a UUID as the account number
             Random rand = new Random();
-            accountNumber = String.valueOf(rand.nextLong(100000000));
+            accountNumber = String.valueOf(rand.nextInt((100000000 - 10000000) + 1) + 10000000);
+//            accountNumber = String.valueOf(rand.nextLong(100000000));
 //	        accountNumber = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);
 	    } while (accountRepository.findByAccountNumber(accountNumber) != null);
 

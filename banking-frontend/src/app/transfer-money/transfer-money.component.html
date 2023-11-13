@@ -1,6 +1,6 @@
 <div class="main-div">
     <mat-card style="border: 1px solid #ccc;">
-            <mat-card-header>
+            <mat-card-header class="sticky-header">
                 <p>Transfer Money</p>
             </mat-card-header>
         <mat-card-content>
@@ -9,23 +9,23 @@
                     <mat-form-field>
                         <label >Account No. </label>
                         <input matInput type="text" id="transferTo" placeholder="Receiver's account no." formControlName="transferTo" name="transferTo">
-                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].invalid && transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Source & Target Account no. are same</mat-error>
-                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].invalid && !transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Enter a valid Account no.</mat-error>
+                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].touched && transferMoneyForm.controls['transferTo'].invalid && transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Source & Target Account no. can't be same</mat-error>
+                        <mat-error *ngIf="transferMoneyForm.controls['transferTo'].touched && transferMoneyForm.controls['transferTo'].invalid && !transferMoneyForm.controls['transferTo'].hasError('isSourceAndTargetSame')">Enter a valid Account no.</mat-error>
 
                     </mat-form-field>
                   </p>
                   <p>
                       <mat-form-field>
                         <label >Amount </label>
-                        <input matInput class="form-control" type="number" placeholder="Amount to be transfer" formControlName="amount" name="amount">
-                        <mat-error *ngIf="transferMoneyForm.controls['amount'].invalid">Enter a valid Amount</mat-error>
+                        <input matInput class="form-control" type="number" placeholder="Amount to be transfer" formControlName="amount" name="amount" appNoStartingZero>
+                        <mat-error *ngIf="transferMoneyForm.controls['amount'].touched && transferMoneyForm.controls['amount'].invalid">Enter a valid Amount</mat-error>
                         <mat-hint>Max limit 100000</mat-hint>
                     </mat-form-field>
                   </p>
                   <p>
                     <mat-form-field>
                         <input type="password" matInput placeholder="Enter 4 digit PIN" id="pin" name="pin" formControlName="pin">
-                        <mat-error *ngIf="transferMoneyForm.controls['pin'].invalid">Enter valid PIN</mat-error>
+                        <mat-error *ngIf="transferMoneyForm.controls['pin'].touched && transferMoneyForm.controls['pin'].invalid">Enter valid PIN</mat-error>
                     </mat-form-field>
                   </p>
                   <button [ngStyle]="{'background-color': transferMoneyForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!transferMoneyForm.valid">Transfer</button>

@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-// import {ServiceService} from '../services/service.service';
-// import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
-import { MatDatepickerControl, MatDatepickerPanel } from '@angular/material/datepicker';
+// import { MatDatepickerControl, MatDatepickerPanel } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -13,9 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
-
-    formValid: boolean = true;
+export class RegisterComponent implements OnInit{
 
     registerForm = new FormGroup(
       {
@@ -23,13 +18,13 @@ export class RegisterComponent {
           email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
           contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{10}$')]),
           password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+          confirmPassword: new FormControl(null, [Validators.required]),
           dob: new FormControl(null, Validators.required),
           address: new FormControl(null, Validators.required),
           pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')])
 
       }
     );
-    date_of_birth :any ='';
 
     constructor(
         private service: BankingService,
@@ -37,7 +32,21 @@ export class RegisterComponent {
         private snackBar: MatSnackBar
     ) {
     }
-
+    ngOnInit(): void {
+        this.registerForm = new FormGroup(
+            {
+                name: new FormControl(null, Validators.required),
+                email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
+                contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{10}$')]),
+                password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+                confirmPassword: new FormControl(null, [Validators.required, this.passwordsMatch.bind(this)]),
+                dob: new FormControl(null, Validators.required),
+                address: new FormControl(null, Validators.required),
+                pin: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern('[0-9]{4}$')])
+      
+            }
+          );
+    }
 
     submitForm() {
         let value : string | any = this.registerForm.value.dob;
@@ -68,7 +77,10 @@ export class RegisterComponent {
         );
     }
 
-    get u() {
-        return this.registerForm.controls;
-    }
+    private passwordsMatch(control: any): { [key: string]: boolean } | null {
+        const password = this.registerForm.controls['password'].value;
+        const confirmPassword = control.value;
+    
+        return password === confirmPassword ? null : { passwordsNotMatch: true };
+      }
 }

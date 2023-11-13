@@ -4,6 +4,7 @@ import { BankingService } from '../services/banking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Utility } from '../shared/utils/utility.component';
 
 @Component({
   selector: 'app-deposit',
@@ -21,7 +22,7 @@ export class DepositComponent implements OnInit, OnDestroy{
     subscription: Subscription;
     private depositMoneySubscription: Subscription = new Subscription;
     constructor(private service: BankingService, private snackBar: MatSnackBar, private router: Router) {
-      this.service.refresh.subscribe(()=>{this.depositForm.reset()});
+      this.service.refresh.subscribe((event)=>{ if(event==='form-reset'){ Utility.resetForm(this.depositForm); }});
       this.subscription = router.events.subscribe((event) => {
         if (event instanceof NavigationStart) {
            this.browserRefresh = !router.navigated;
@@ -50,11 +51,11 @@ export class DepositComponent implements OnInit, OnDestroy{
         };
         this.depositMoneySubscription = this.service.depositMoney(transferDetails).subscribe(
             (response: any) => {
-              this.depositForm.reset();
+              Utility.resetForm(this.depositForm);
               // this.depositForm.value.amount = undefined;
               // this.depositForm.value.pin = undefined;
               if(response.successMsg){
-                this.service.refresh.emit('transfer');
+                this.service.refresh.next('transfer');
                   this.snackBar.open(response.successMsg,'', {
                       verticalPosition: 'top',
                       horizontalPosition: 'center',
