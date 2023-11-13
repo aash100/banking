@@ -11,15 +11,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public loginForm : FormGroup = new FormGroup({
     // userId: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]),
     email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(8)])
+    password: new FormControl(null, [Validators.required])
   });
   responseReceived: boolean = false;
   constructor(private router: Router, private service: BankingService, private authService: AuthGuardService,
     private snackBar: MatSnackBar){}
+  ngOnInit(): void {
+    this.loginForm= new FormGroup({
+      // userId: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]),
+      email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
+      password: new FormControl(null, [Validators.required])
+    });
+  }
 
   login() {
     this.responseReceived = false;

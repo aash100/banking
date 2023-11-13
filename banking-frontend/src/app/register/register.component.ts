@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit{
 
     registerForm = new FormGroup(
       {
-          name: new FormControl(null, Validators.required),
+          name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]*$')]),
           email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
           contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{10}$')]),
           password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit{
     ngOnInit(): void {
         this.registerForm = new FormGroup(
             {
-                name: new FormControl(null, Validators.required),
+                name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]*$')]),
                 email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
                 contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{10}$')]),
                 password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
