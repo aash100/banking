@@ -75,7 +75,6 @@ public class UserController {
         System.out.println(userDetails);
         String token = jwtTokenUtil.generateToken(userDetails);
         CommonResponseMapper<String> data = new CommonResponseMapper<String>(token, "LoggedIn Successfully", null);
-        // Return the JWT token in the response
         return new ResponseEntity<>(data , HttpStatus.OK);
     }
 
