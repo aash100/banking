@@ -14,6 +14,7 @@ This project helps us to understand the basic working of Bank accounts and their
 - java 1.8.x
 - maven 3.x
 - npm
+- mysql database running on the port 3306 of localhost and schema/database should be created with name: banking
 
 # Steps To Setup Backend
 
