@@ -26,7 +26,7 @@ This project helps us to understand the basic working of Bank accounts and their
     mvn clean install
 
 **4. Run project** 
-    java -jar target/backend-0.0.1-SNAPSHOT.jar
+    java -jar target/banking-backend-0.0.1-SNAPSHOT.jar
 -   Alternatively, you can run the app without packaging it using 
     mvn spring-boot:run
 ```
