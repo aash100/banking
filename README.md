@@ -50,8 +50,8 @@ The app defines following APIs.
 **1. Move To Frontend Directory and open in command line**
 
 **2. Install Package**
-    npm install
+    npm install --force
 **3. Run Project**
-    npm start
+    npm start or ng serve -o to automatically open the browser also
 **4. Open url**
     http://localhost:4200/
