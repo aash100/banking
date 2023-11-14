@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { BankingService } from '../services/banking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utility } from '../shared/utils/utility.component';
