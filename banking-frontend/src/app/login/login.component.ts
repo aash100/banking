@@ -5,6 +5,7 @@ import { BankingService } from '../services/banking.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthGuardService } from '../guard/auth-guard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,8 +18,11 @@ export class LoginComponent implements OnInit{
   });
   responseReceived: boolean = false;
   constructor(private router: Router, private service: BankingService, private authService: AuthGuardService,
-    private snackBar: MatSnackBar){}
+    private snackBar: MatSnackBar, private cookie: CookieService){}
   ngOnInit(): void {
+    if(this.authService.getAuthorizationToken()){
+      this.cookie.deleteAll();
+    }
     this.loginForm= new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
       password: new FormControl(null, [Validators.required])

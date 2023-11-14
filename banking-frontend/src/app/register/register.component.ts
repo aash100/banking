@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import { BankingService } from '../services/banking.service';
 // import { MatDatepickerControl, MatDatepickerPanel } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthGuardService } from '../guard/auth-guard.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-register',
@@ -29,10 +31,15 @@ export class RegisterComponent implements OnInit{
     constructor(
         private service: BankingService,
         private router: Router,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private authService : AuthGuardService,
+        private cookie: CookieService
     ) {
     }
     ngOnInit(): void {
+        if(this.authService.getAuthorizationToken()){
+            this.cookie.deleteAll();
+          }
         this.registerForm = new FormGroup(
             {
                 name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]{1}[a-zA-Z ]*$')]),
