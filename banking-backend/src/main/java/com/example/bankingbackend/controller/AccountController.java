@@ -50,6 +50,6 @@ public class AccountController {
     @GetMapping("/transactions")
     public ResponseEntity<CommonResponseWrapper<List<TransactionDTO>>> getAllTransactionsByAccountNumber() {
         List<TransactionDTO> transactions = transactionService.getAllTransactionsByAccountNumber(LoggedinUser.getAccountNumber());
-        return new ResponseEntity<>( new CommonResponseWrapper<List<TransactionDTO>>(transactions,"Fund transferred successfully",null ), HttpStatus.OK);
+        return new ResponseEntity<>( new CommonResponseWrapper<List<TransactionDTO>>(transactions,"Transaction history fetched successfully",null ), HttpStatus.OK);
     }
 }
