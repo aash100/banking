@@ -24,7 +24,6 @@ public class DashboardController {
         String accountNumber = LoggedinUser.getAccountNumber();
         UserResponse userResponse = dashboardService.getUserDetails(accountNumber);
         return new ResponseEntity<>(new CommonResponseWrapper<UserResponse>(userResponse,"User details fetched successfully",null ), HttpStatus.OK);
-//        return ResponseEntity.ok(userResponse);
     }
 
     @GetMapping("/account")
@@ -32,8 +31,6 @@ public class DashboardController {
         String accountNumber = LoggedinUser.getAccountNumber();
         AccountResponse accountResponse = dashboardService.getAccountDetails(accountNumber);
         return new ResponseEntity<>(new CommonResponseWrapper<AccountResponse>(accountResponse,"Account details fetched successfully",null ), HttpStatus.OK);
-
-//        return ResponseEntity.ok(accountResponse);
     }
     
     
