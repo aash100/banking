@@ -1,11 +1,8 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {catchError, tap} from 'rxjs/operators';
-import {throwError, BehaviorSubject, Subject} from 'rxjs';
-import {ToastrService} from 'ngx-toastr';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError, Subject} from 'rxjs';
 import { Constant } from '../constant';
-import { AuthGuardService } from '../guard/auth-guard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -13,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class BankingService {
 
-    private _refreshNeeded$ = new Subject<void>();
     public name = new Subject<string>();
     public accountNumber = new Subject<string>();
     
@@ -52,10 +48,6 @@ export class BankingService {
 
     }
 
-    get refreshNeeded$() {
-        return this._refreshNeeded$;
-    }
-
     login(loginDetails: any) {
         return this.http.post(Constant.login, loginDetails).pipe(catchError(error => this.handleError(error)));
     }
@@ -65,12 +57,6 @@ export class BankingService {
     fetchUserDetails() {
         return this.http.get(Constant.userDetails).pipe(catchError(error => this.handleError(error)));
     }
-
-    // onUpdateProfile(userDetails: { dob: string; name: string; email: string }) {
-    //     return this.http.put(Constant.registerUser, userDetails).pipe(tap(() => {
-    //         this.refreshNeeded$.next();
-    //     }), catchError(error => this.handleError(error)));
-    // }
 
     registerUser(userDetails: any) {
         return this.http.post(Constant.registerUser, userDetails).pipe(catchError(error => this.handleError(error)));

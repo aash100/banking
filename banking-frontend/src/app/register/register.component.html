@@ -65,13 +65,10 @@
 
                     </mat-form-field>
                   </p>
-                    <!-- <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  type="submit" [disabled]="!registerForm.valid">Register</button> -->
-
             </form>
         </mat-card-content>
         <mat-card-actions class="sticky-footer">
           <button [ngStyle]="{'background-color': registerForm.valid? '#004a8f':'#9cc5ec', 'color': 'white'}"  (click)="submitForm()" [disabled]="!registerForm.valid">Register</button>
-
         </mat-card-actions>
     </mat-card>
 </div>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { BankingService } from '../services/banking.service';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -31,8 +31,10 @@ export class AccountComponent implements OnInit {
     this.accounts=[];
       this.service.getAccountDetails().subscribe(
           (response: any) => {
-            this.service.accountNumber.next(response['accountNumber']);
-            this.accounts.push(response);
+          if(response.successMsg){
+            this.service.accountNumber.next(response.data['accountNumber']);
+            this.accounts.push(response.data);
+          }
           }
       );
   }

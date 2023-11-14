@@ -11,14 +11,11 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { AuthGuardService } from './guard/auth-guard.service';
-import { LoginGuardService } from './guard/login-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountComponent } from './account/account.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
@@ -48,7 +45,6 @@ import { NoStartingZeroDirective } from './shared/directives/no-starting-zero.di
     AccountComponent,
     TransactionHistoryComponent,
     TransferMoneyComponent,
-    UserProfileComponent,
     DepositComponent,
     WithdrawalComponent,
     RestrictPasteDirective,
@@ -63,11 +59,6 @@ import { NoStartingZeroDirective } from './shared/directives/no-starting-zero.di
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot({
-      closeButton: true,
-      timeOut: 5000, // 15 seconds
-      progressBar: true,
-    }),
     MatCardModule,
     MatTabsModule,
     MatFormFieldModule,
@@ -81,7 +72,7 @@ import { NoStartingZeroDirective } from './shared/directives/no-starting-zero.di
     MatSnackBarModule,
     MatIconModule,
   ],
-  providers: [AuthGuardService,LoginGuardService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [AuthGuardService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

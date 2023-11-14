@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BankingService } from '../services/banking.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { AuthGuardService } from '../guard/auth-guard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
@@ -13,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit{
   public loginForm : FormGroup = new FormGroup({
-    // userId: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]),
     email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
     password: new FormControl(null, [Validators.required])
   });
@@ -22,7 +20,6 @@ export class LoginComponent implements OnInit{
     private snackBar: MatSnackBar){}
   ngOnInit(): void {
     this.loginForm= new FormGroup({
-      // userId: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]),
       email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
       password: new FormControl(null, [Validators.required])
     });
@@ -31,7 +28,6 @@ export class LoginComponent implements OnInit{
   login() {
     this.responseReceived = false;
     const loginDetails = {
-      // userId: this.loginForm.value.userId,
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     };
@@ -58,12 +54,4 @@ export class LoginComponent implements OnInit{
     );
 }
 
-}
-
-export enum ToasterPosition {
-  topRight = 'toast-top-right',
-  topLeft = 'toast-top-left',
-  bottomRight = 'toast-bottom-right',
-  bottomLeft= 'toast-bottom-left',
-  // Other positions you would like
 }

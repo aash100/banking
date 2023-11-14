@@ -1,16 +1,13 @@
 package com.example.bankingbackend.controller;
 
 
-import com.example.bankingbackend.dto.ErrorResponse;
 import com.example.bankingbackend.dto.LoginRequest;
-import com.example.bankingbackend.dto.SuccessResponse;
 import com.example.bankingbackend.dto.UserResponse;
 import com.example.bankingbackend.entity.User;
 import com.example.bankingbackend.mapper.UserMapper;
-import com.example.bankingbackend.security.JwtAuthenticationFilter;
 import com.example.bankingbackend.security.JwtTokenUtil;
 import com.example.bankingbackend.service.UserService;
-import com.example.bankingbackend.wrapper.CommonResponseMapper;
+import com.example.bankingbackend.wrapper.CommonResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/users")
@@ -45,7 +37,7 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
     
     @PostMapping("/register")
-    public ResponseEntity<CommonResponseMapper<UserResponse>> registerUser(@RequestBody UserMapper userMapper) {
+    public ResponseEntity<CommonResponseWrapper<UserResponse>> registerUser(@RequestBody UserMapper userMapper) {
         User registeredUser = userService.registerUser(userMapper);
         
         UserResponse userResponse = new UserResponse();
@@ -55,11 +47,11 @@ public class UserController {
         userResponse.setAddress(registeredUser.getAddress());
         userResponse.setId(registeredUser.getId());
         userResponse.setAccountType(registeredUser.getAccount().getAccountType());
-        return ResponseEntity.ok(new CommonResponseMapper<UserResponse>(userResponse, "Registered Successfully", null));
+        return ResponseEntity.ok(new CommonResponseWrapper<UserResponse>(userResponse, "Registered Successfully", null));
     }
     
     @PostMapping("/login")
-    public ResponseEntity<CommonResponseMapper<String>> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<CommonResponseWrapper<String>> login(@RequestBody LoginRequest loginRequest) {
         try {
             // Authenticate the user with the userId and password
             authenticationManager.authenticate(
@@ -67,14 +59,14 @@ public class UserController {
             );
         } catch (BadCredentialsException e) {
             // Invalid credentials, return 401 Unauthorized
-            return new ResponseEntity<>(new CommonResponseMapper<>(null, null, "Invalid User Id or Password") , HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new CommonResponseWrapper<>(null, null, "Invalid User Id or Password") , HttpStatus.UNAUTHORIZED);
         }
 
         // If authentication successful, generate JWT token
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         System.out.println(userDetails);
         String token = jwtTokenUtil.generateToken(userDetails);
-        CommonResponseMapper<String> data = new CommonResponseMapper<String>(token, "LoggedIn Successfully", null);
+        CommonResponseWrapper<String> data = new CommonResponseWrapper<String>(token, "LoggedIn Successfully", null);
         return new ResponseEntity<>(data , HttpStatus.OK);
     }
 
