@@ -40,12 +40,11 @@
                   <p>
                     <mat-form-field>
                         <input type="password" matInput placeholder="Password" id="password" name="password" formControlName="password">
-                        <mat-error *ngIf="registerForm.controls['password'].invalid && !registerForm.controls['password'].hasError('minlength')">Enter a valid Password</mat-error>
-                        <mat-error *ngIf="registerForm.controls['password'].hasError('minlength') && registerForm.controls['password'].touched">Password must be at least 8 characters long.</mat-error>
+                        <mat-error *ngIf="registerForm.controls['password'].hasError('alphanumeric') && registerForm.controls['password'].touched">Password must be 8 characters with at least one letter, one number, and one special character.</mat-error>
                       </mat-form-field>
                   </p>
                   <p>
-                    <mat-form-field>
+                    <mat-form-field [ngStyle]="{'margin-top': registerForm.controls['password'].hasError('alphanumeric') && registerForm.controls['password'].touched ? '5px' : '0px'}">
                         <input type="password" matInput placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" appRestrictPaste>
                         <mat-error *ngIf="registerForm.controls['confirmPassword'].invalid">Passwords do not match.</mat-error>
                     

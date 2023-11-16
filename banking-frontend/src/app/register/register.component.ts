@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit{
           name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]{1}[a-zA-Z ]*$')]),
           email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
           contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{9}$')]),
-          password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+          password: new FormControl(null, [Validators.required, this.alphanumericValidator()]),
           confirmPassword: new FormControl(null, [Validators.required]),
           dob: new FormControl(null, Validators.required),
           address: new FormControl(null, Validators.required),
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit{
                 name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]{1}[a-zA-Z ]*$')]),
                 email: new FormControl(null, [Validators.required, Validators.pattern('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')]),
                 contactNo: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.pattern('^[6,7,8,9]{1}[0-9]{9}$')]),
-                password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+                password: new FormControl(null, [Validators.required, this.alphanumericValidator()]),
                 confirmPassword: new FormControl(null, [Validators.required, this.passwordsMatch.bind(this)]),
                 dob: new FormControl(null, Validators.required),
                 address: new FormControl(null, Validators.required),
@@ -89,5 +89,17 @@ export class RegisterComponent implements OnInit{
         const confirmPassword = control.value;
     
         return password === confirmPassword ? null : { passwordsNotMatch: true };
+      }
+
+      alphanumericValidator() {
+        return (control: any): { [key: string]: any } | null => {
+          const alphanumericRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/;
+    
+          if (!alphanumericRegex.test(control.value)) {
+            return { 'alphanumeric': true };
+          }
+    
+          return null;
+        };
       }
 }
