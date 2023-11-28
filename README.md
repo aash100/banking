@@ -30,7 +30,7 @@ This project helps us to understand the basic working of Bank accounts and their
     java -jar target/banking-backend-0.0.1-SNAPSHOT.jar
 -   Alternatively, you can run the app without packaging it using 
     mvn spring-boot:run
-```
+
 # Explore apis in backend
 API will be hosted at the port 8080 of localhost
 i.e. http://localhost:8080/
